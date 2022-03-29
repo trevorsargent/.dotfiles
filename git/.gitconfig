@@ -1,9 +1,8 @@
 [user]
-	name = Jake Wiesler
-	email = jakewiesler@gmail.com
+	name = Trevor Sargent
+	email = trevor.a.sargent@gmail.com
 [core]
 	excludesfile = ~/.gitignore_global
-    editor = nvim
 [pull]
 	ff = only
 [init]
