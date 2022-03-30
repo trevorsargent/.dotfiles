@@ -23,8 +23,6 @@ alias gcob='git branch | fzf | xargs git checkout'
 alias vimrc='vim ${HOME}/.config/nvim/init.vim'
 # cat -> bat
 alias cat='bat'
-# colored ls output
-alias ls='ls -al --color'
 
 # DIRCOLORS (MacOS)
 export CLICOLOR=1
