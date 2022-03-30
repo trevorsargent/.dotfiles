@@ -22,7 +22,8 @@ nix-env -iA \
 	nixpkgs.gnumake \
 	nixpkgs.gcc \
 	nixpkgs.direnv \
-	nixpkgs.vim
+	nixpkgs.vim \
+	nixpkgs.autojump
 
 # stow dotfiles
 stow git

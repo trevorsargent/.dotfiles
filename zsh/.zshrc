@@ -34,6 +34,7 @@ export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --border --margin=1 --pad
 # PATH
 # export PATH=${PATH}:/usr/local/go/bin
 # export PATH=${PATH}:${HOME}/go/bin
+export PATH=${PATH}:/snap/bin
 
 export BAT_THEME="gruvbox-dark"
 
@@ -43,4 +44,5 @@ if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH=${PATH}:/snap/bin
+#autojump
+source ~/.nix-profile/share/autojump/autojump.zsh
