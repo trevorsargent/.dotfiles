@@ -17,7 +17,8 @@ nix-env -iA \
 	nixpkgs.bat \
 	nixpkgs.gnumake \
 	nixpkgs.gcc \
-	nixpkgs.direnv
+	nixpkgs.direnv \
+	nixpkgs.vim
 
 # stow dotfiles
 stow git
@@ -32,6 +33,3 @@ sudo chsh -s $(which zsh) $USER
 
 # bundle zsh plugins 
 antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
-
-# Use kitty terminal on MacOS
-[ `uname -s` = 'Darwin' ] && stow kitty
