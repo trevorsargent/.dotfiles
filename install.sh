@@ -1,8 +1,12 @@
 # install nix
 curl -L https://nixos.org/nix/install | sh
 
+if [ "$(uname -s)" != "Darwin" ]; then
+	export PATH=$PATH:/nix/var/nix/profiles/default/bin
+fi
+
 # source nix
-. ~/.nix-profile/etc/profile.d/nix.sh
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi
 
 # install packages
 nix-env -iA \
@@ -22,7 +26,6 @@ nix-env -iA \
 
 # stow dotfiles
 stow git
-stow tmux
 stow zsh
 
 # add zsh as a login shell
