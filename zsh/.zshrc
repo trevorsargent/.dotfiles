@@ -11,6 +11,7 @@ export NVM_DIR=${HOME}/.nvm
 export NVM_COMPLETION=true
 
 source ${HOME}/.zsh_plugins.sh
+export PATH=$PATH:~/go/bin
 
 # Bundle zsh plugins via antibody
 alias update-antibody='antibody bundle < $HOME/.zsh_plugins.txt > $HOME/.zsh_plugins.sh'
@@ -46,3 +47,10 @@ if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile
 
 #autojump
 source ~/.nix-profile/share/autojump/autojump.zsh
+
+# bun completions
+[ -s "/Users/trevor/.bun/_bun" ] && source "/Users/trevor/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/trevor/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
