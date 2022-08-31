@@ -9,6 +9,7 @@ brew install romkatv/powerlevel10k/powerlevel10k
 # stow dotfiles
 stow git
 stow zsh
+stow osx
 
 # add zsh as a login shell
 command -v zsh | sudo tee -a /etc/shells
