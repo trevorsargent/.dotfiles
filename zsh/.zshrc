@@ -1,3 +1,4 @@
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 source $(brew --prefix powerlevel10k)/powerlevel10k.zsh-theme
 
