@@ -1,6 +1,6 @@
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-source $(brew --prefix powerlevel10k)/powerlevel10k.zsh-theme
+source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 export NVM_COMPLETION=true
 
@@ -28,4 +28,12 @@ export BAT_THEME="gruvbox-dark"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # autojump
-[ -f $(brew --prefix)/etc/profile.d/autojump.sh ] && . $(brew --prefix)/etc/profile.d/autojump.sh
+[ -f $(brew --prefix autojump)/etc/profile.d/autojump.sh ] && . $(brew --prefix autojump)/etc/profile.d/autojump.sh
+
+export NODE_OPTIONS=--max_old_space_size=16382
+
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$(brew --prefix nvm)/nvm.sh" ] && \. "$(brew --prefix nvm)/nvm.sh"  # This loads nvm
+  [ -s "$(brew --prefix nvm)/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix nvm)/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+export PICO_SDK_PATH=/home/trevor/Code/pico/pico-sdk
