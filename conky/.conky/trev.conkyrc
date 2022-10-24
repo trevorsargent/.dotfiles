@@ -1,0 +1,213 @@
+--[[
+#=====================================================================================
+#                               arcolinux
+# Date    : package-date
+# Author  : Erik Dubois at http://www.erikdubois.be
+# Version : package-version
+# License : Distributed under the terms of GNU GPL version 2 or later
+# Documentation : http://erikdubois.be/
+#======================================================================================
+# CONKY
+# For commands in conky.config section:
+# http://conky.sourceforge.net/config_settings.html
+#
+# For commands in conky.text section:
+# http://conky.sourceforge.net/variables.html
+#
+# A PDF with all variables is provided
+#=====================================================================================
+# FONTS
+# To avoid copyright infringements you will have to download
+# and install the fonts yourself sometimes.
+#=====================================================================================
+# GENERAL INFO ABOUT FONTS
+# Go and look for a nice font on sites like http://www.dafont.com/
+# Download and unzip - double click the font to install it (font-manager must be installed)
+# No font-manager then put fonts in ~/.fonts
+# Change the font name in the conky
+# The name can be known with a command in the terminal: fc-list | grep "part of name"
+# Change width and height of the conky according to font
+# Reboot your system or fc-cache -fv in terminal
+# Enjoy
+#=====================================================================================
+# FONTS FOR THIS CONKY
+# http://www.dafont.com/style-bats.font
+#======================================================================================
+# Titus Modifications (downloaded and editted Chris Titus' .configrc) 
+#======================================================================================
+# Changed time from Roboto to GE Inspira which is a base Conky Gotham Addon
+# Changed Drives from 2 to 3
+# Modified one_window_type from desktop to normal for KDE compatibility
+# Modified Ethernet settings
+# Modified Pink Lines to Bright Blue
+# Removed Extra symbols and incorrect formatting
+#======================================================================================
+
+]]
+
+conky.config = {
+
+	--Various settings
+
+    override_utf8_locale=yes,
+	background = false, 							-- forked to background
+	cpu_avg_samples = 2,						-- The number of samples to average for CPU monitoring.
+	diskio_avg_samples = 10,					-- The number of samples to average for disk I/O monitoring.
+	double_buffer = true,						-- Use the Xdbe extension? (eliminates flicker)
+	if_up_strictness = 'address',				-- how strict if testing interface is up - up, link or address
+	net_avg_samples =  3,						-- The number of samples to average for net data
+	no_buffers = true,							-- Subtract (file system) buffers from used memory?
+	temperature_unit = 'fahrenheit',				-- fahrenheit or celsius
+	text_buffer_size = 2048,					-- size of buffer for display of content of large variables - default 256
+	update_interval = 1,						-- update interval
+	imlib_cache_size = 0,                       -- disable image cache to get a new spotify cover per song
+
+
+	--Placement
+
+	alignment = 'top_right',					-- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
+												-- middle_left,middle_middle,middle_right,none
+	--Arch Duoscreen
+	--gap_x = -1910,
+	gap_x = 10,									-- pixels between right or left border
+	gap_y = 0,									-- pixels between bottom or left border
+	minimum_height = 1440,						-- minimum height of window
+	minimum_width = 360,						-- minimum width of window
+	maximum_width = 360,	    				-- maximum width of window
+
+	--Graphical
+
+	border_inner_margin = 0, 					-- margin between border and text
+	border_outer_margin = 0, 					-- margin between border and edge of window
+	border_width = 0, 							-- border width in pixels
+	default_bar_width = 80,					    -- default is 0 - full width
+	default_bar_height = 10,					-- default is 6
+	default_gauge_height = 25,					-- default is 25
+	default_gauge_width =40,					-- default is 40
+	default_graph_height = 50,					-- default is 25
+	default_graph_width = 0,					-- default is 0 - full width
+	draw_borders = false,						-- draw borders around text
+	draw_graph_borders = false,					-- draw borders around graphs
+	draw_shades = false,	    					-- draw shades
+	draw_outline = false,						-- draw outline
+	stippled_borders = 0,						-- dashing the border
+
+	--Textual
+
+	extra_newline = false,						-- extra newline at the end - for asesome's wiboxes
+	format_human_readable = true,				-- KiB, MiB rather then number of bytes
+	font = 'Cantarell:size=10',  				-- font for complete conky unless in code defined
+	max_text_width = 0,							-- 0 will make sure line does not get broken if width too smal
+	max_user_text = 16384,						-- max text in conky default 16384
+	override_utf8_locale = true,				-- force UTF8 requires xft
+	short_units = true,							-- shorten units from KiB to k
+	top_name_width = 21,						-- width for $top name value default 15
+	top_name_verbose = false,					-- If true, top name shows the full command line of  each  process - Default value is false.
+	uppercase = false,							-- uppercase or not
+	use_xft = true,								-- xft font - anti-aliased font
+	xftalpha = 1,								-- alpha of the xft font - between 0-1
+
+	--Windows
+
+	own_window = true,							-- create your own window to draw
+	own_window_type = desktop,				    -- if own_window true options are: normal/override/dock/desktop/panel
+	own_window_argb_visual = true,				-- use ARGB - composite manager required
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',  -- if own_window true - just hints - own_window_type sets it
+	own_window_title = 'system_conky',			-- set the name manually  - default conky "hostname"
+    own_window_argb_value = 0,
+
+
+
+
+
+
+};
+
+
+conky.text = [[
+${voffset 5}${font Cantarell:black:size=15}${alignr}${voffset 0}${time %l}:${time %M} ${time %p}${font}
+${alignr}${voffset 0}${time %A} ${time %B} ${time %e}, ${time %Y}
+
+
+#${exec ~/.conky/weather.sh}
+
+
+# MUSIC
+${if_running spotify}
+${alignr}${font black:size=15}${exec ~/.conky/conky-spotify/scripts/title.sh}${font}
+${alignr}${exec ~/.conky/conky-spotify/scripts/artist.sh}
+# ${alignr}${exec ~/.conky/conky-spotify/scripts/album.sh}
+${endif} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Network
+#arrows
+# ${image ~/.conky/assets/arrow-up.png -p 300,0 -s 20x20} ${downspeedf enp4s0 3} / ${upspeedf enp4s0}
+# ${image ~/.conky/assets/arrow-down.png -p 400,0 -s 20x20} ${downspeedf enp4s0 3} / ${upspeedf enp4s0}
+${color 555}${downspeedgraph enp4s0 50,175}${color}${goto 185}${color 555}${upspeedgraph enp4s0 50,175}${color}
+${color bbb}${voffset -20}${hr 1}${voffset}${color}
+${downspeed enp4s0}${alignr}${upspeed enp4s0}
+
+
+
+#CPU
+${color 555}${cpugraph}${color}
+${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+${freq_g}${font Cantarell:size=8} GHz${font}${alignr}${cpu}%${color bbb} 
+${voffset 2}${cpubar 10,0}
+${voffset -2}${goto 0}${cpubar cpu0 5,82}${goto 93}${cpubar cpu6  5,82}${goto 185}${cpubar cpu12 5,82}${goto 277}${cpubar cpu18 5,82}
+${voffset -4}${goto 0}${cpubar cpu1 5,82}${goto 93}${cpubar cpu7  5,82}${goto 185}${cpubar cpu13 5,82}${goto 277}${cpubar cpu19 5,82} 
+${voffset -4}${goto 0}${cpubar cpu2 5,82}${goto 93}${cpubar cpu8  5,82}${goto 185}${cpubar cpu14 5,82}${goto 277}${cpubar cpu20 5,82} 
+${voffset -4}${goto 0}${cpubar cpu3 5,82}${goto 93}${cpubar cpu9  5,82}${goto 185}${cpubar cpu15 5,82}${goto 277}${cpubar cpu21 5,82} 
+${voffset -4}${goto 0}${cpubar cpu4 5,82}${goto 93}${cpubar cpu10 5,82}${goto 185}${cpubar cpu16 5,82}${goto 277}${cpubar cpu22 5,82} 
+${voffset -4}${goto 0}${cpubar cpu5 5,82}${goto 93}${cpubar cpu11 5,82}${goto 185}${cpubar cpu16 5,82}${goto 277}${cpubar cpu23 5,82}${color}
+${top name 1}${alignr}${top cpu 1}%
+${top name 2}${alignr}${top cpu 2}%
+${top name 3}${alignr}${top cpu 3}%
+${top name 4}${alignr}${top cpu 4}%
+${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+
+
+
+# MEM
+${color 555}${memgraph}${color}
+${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+$memperc%${alignr}$mem ($memfree) / $memmax
+${membar 10,0}
+${top_mem name 1}${alignr}${alignr}${top_mem mem_vsize 1}
+${top_mem name 2}${alignr}${alignr}${top_mem mem_vsize 2}
+${top_mem name 3}${alignr}${alignr}${top_mem mem_vsize 3}
+${top_mem name 4}${alignr}${alignr}${top_mem mem_vsize 4}${color}
+${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+
+
+
+
+${color 555}${diskiograph_read /dev/nvme1n1p4 50,175}${color}${goto 185}${color 555}${diskiograph_write /dev/nvme1n1p4 50,175}
+${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+${diskio_read /dev/nvme1n1p4}${alignr}${diskio_write /dev/nvme1n1p4}
+${voffset 1}${color bbb}${fs_bar 10,0 /}${color}
+${fs_used /}${goto 165}/${alignr}${fs_size /}
+${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+
+${color 555}${diskiograph_read /dev/nvme1n1p3 50,175}${color}${goto 185}${color 555}${diskiograph_write /dev/nvme1n1p3 50,175}
+${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+${diskio_read /dev/nvme1n1p3}${alignr}${diskio_write /dev/nvme1n1p3}
+${voffset 1}${color bbb}${fs_bar 10,0 /home}${color}
+${fs_used /home}${goto 165}/home${alignr}${fs_size /home}
+${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+]];
