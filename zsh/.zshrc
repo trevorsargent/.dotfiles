@@ -37,3 +37,8 @@ export NODE_OPTIONS=--max_old_space_size=16382
   [ -s "$(brew --prefix nvm)/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix nvm)/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export PICO_SDK_PATH=/home/trevor/Code/pico/pico-sdk
+
+export DOTNET_ROOT=/usr/share/dotnet
+export MSBuildSDKsPath=$DOTNET_ROOT/sdk/$(${DOTNET_ROOT}/dotnet --version)/Sdks
+export PATH=${PATH}:${DOTNET_ROOT}
+export PATH=${PATH}:$HOME/.dotnet/tools

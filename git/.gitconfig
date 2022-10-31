@@ -3,6 +3,7 @@
 	email = trevor.a.sargent@gmail.com
 [core]
 	excludesfile = ~/.gitignore_global
+	editor = vim
 [pull]
 	ff = only
 [init]
