@@ -59,3 +59,5 @@ fi
 export MSBuildSDKsPath=$DOTNET_ROOT/sdk/$(${DOTNET_ROOT}/dotnet --version)/Sdks
 export PATH=${PATH}:${DOTNET_ROOT}
 export PATH=${PATH}:$HOME/.dotnet/tools
+
+export PATH=/Users/trevor/.nimble/bin:$PATH
