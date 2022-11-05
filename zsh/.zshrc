@@ -1,4 +1,15 @@
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+if [[ $OSTYPE == 'darwin'* ]]; then 
+  eval "$(/opt/homebrew/bin/brew shellenv)"          
+else 
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
@@ -38,7 +49,13 @@ export NODE_OPTIONS=--max_old_space_size=16382
 
 export PICO_SDK_PATH=/home/trevor/Code/pico/pico-sdk
 
-export DOTNET_ROOT=/usr/share/dotnet
+
+if [[ $OSTYPE == 'darwin'* ]]; then 
+  DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
+else
+  export DOTNET_ROOT=/usr/share/dotnet
+fi
+
 export MSBuildSDKsPath=$DOTNET_ROOT/sdk/$(${DOTNET_ROOT}/dotnet --version)/Sdks
 export PATH=${PATH}:${DOTNET_ROOT}
 export PATH=${PATH}:$HOME/.dotnet/tools
