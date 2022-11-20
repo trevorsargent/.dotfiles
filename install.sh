@@ -11,6 +11,7 @@ stow git
 stow zsh
 stow osx
 stow conky
+stow ansible
 
 # add zsh as a login shell
 command -v zsh | sudo tee -a /etc/shells
