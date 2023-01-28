@@ -36,4 +36,46 @@ export PICO_SDK_PATH=/home/trevor/Code/pico/pico-sdk
 
 export PATH=/Users/trevor/.nimble/bin:$PATH
 
-nvm use
+parse_git_branch() {
+  git branch &>/dev/null
+  if [ $? -eq 0 ]; then
+    echo "%F{008}[%f $(git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/') %F{008}]%f"
+  fi
+
+}
+
+copy_function() {
+  test -n "$(declare -f "$1")" || return
+  eval "${_/$1/$2}"
+}
+
+rename_function() {
+  copy_function "$@" || return
+  unset -f "$1"
+}
+
+node_version() {
+  nvm use &>/dev/null
+  if [ $? -eq 0 ]; then
+    echo " %F{002}$(node --version)%f"
+  fi
+}
+
+set_prompt() {
+  nvm use >/dev/null 2>/dev/null
+  PROMPT="%F{008}[%f %~ %F{008}]%f %(!.#.)"
+  RPROMPT=" $(parse_git_branch)$(node_version)"
+}
+
+function cd {
+  builtin cd "$@"
+  set_prompt
+}
+
+set_prompt
+
+rename_function j jj
+
+j() {
+  jj >/dev/null
+}
