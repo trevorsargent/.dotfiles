@@ -10,6 +10,7 @@ brew install zsh
 brew install stow
 brew install autojump
 brew install nvm
+brew install pnpm
 
 # stow dotfiles
 stow git
