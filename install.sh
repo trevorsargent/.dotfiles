@@ -6,6 +6,7 @@ else
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
+brew install zsh
 brew install stow
 brew install autojump
 brew install nvm
