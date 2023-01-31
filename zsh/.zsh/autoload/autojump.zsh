@@ -5,5 +5,5 @@
 rename_function j jj
 
 j() {
-    jj >/dev/null
+    jj $@ >/dev/null
 }
