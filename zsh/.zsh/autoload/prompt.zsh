@@ -17,7 +17,7 @@ node_version() {
 
 set_prompt() {
     nvm use >/dev/null 2>/dev/null
-    PROMPT="%F{008}[%f %~ %F{008}]%f %(!.#.)"
+    PROMPT="%F{$HOST_COLOR}[%f %~ %F{$HOST_COLOR}]%f %(!.#.)"
     RPROMPT="$(parse_git_branch)$(node_version) %F{$HOST_COLOR}%m%f"
 }
 
