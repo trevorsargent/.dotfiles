@@ -1,3 +1,5 @@
+
+
 parse_git_branch() {
     git branch &>/dev/null
     if [ $? -eq 0 ]; then
@@ -9,14 +11,14 @@ parse_git_branch() {
 node_version() {
     nvm use &>/dev/null
     if [ $? -eq 0 ]; then
-        echo " %F{002}$(node --version)%f"
+        echo " %F{$NODE_COLOR}$(node --version)%f"
     fi
 }
 
 set_prompt() {
     nvm use >/dev/null 2>/dev/null
     PROMPT="%F{008}[%f %~ %F{008}]%f %(!.#.)"
-    RPROMPT=" $(parse_git_branch)$(node_version)"
+    RPROMPT="$(parse_git_branch)$(node_version) %F{$HOST_COLOR}%m%f"
 }
 
 set_prompt
