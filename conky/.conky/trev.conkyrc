@@ -146,21 +146,13 @@ ${endif}
 
 
 
-
-
-
-
-
-
-
-
 #Network
 #arrows
 # ${image ~/.conky/assets/arrow-up.png -p 300,0 -s 20x20} ${downspeedf enp4s0 3} / ${upspeedf enp4s0}
 # ${image ~/.conky/assets/arrow-down.png -p 400,0 -s 20x20} ${downspeedf enp4s0 3} / ${upspeedf enp4s0}
 ${color 555}${downspeedgraph enp4s0 50,175}${color}${goto 185}${color 555}${upspeedgraph enp4s0 50,175}${color}
 ${color bbb}${voffset -20}${hr 1}${voffset}${color}
-${downspeed enp4s0}${alignr}${upspeed enp4s0}
+D ${downspeed enp4s0} ${alignr}${upspeed enp4s0} U
 
 
 
@@ -180,6 +172,14 @@ ${top name 2}${alignr}${top cpu 2}%
 ${top name 3}${alignr}${top cpu 3}%
 ${top name 4}${alignr}${top cpu 4}%
 ${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+
+
+
+# GPU
+${alignr}GPU ${nvidia gpuutil}%
+${alignr}RAM ${nvidia membwutil}%
+${alignr}VIDEO ${nvidia videoutil}%
+${alignr}PCIe ${nvidia pcieutil}%
 
 
 
