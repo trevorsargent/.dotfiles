@@ -69,7 +69,7 @@ conky.config = {
 												-- middle_left,middle_middle,middle_right,none
 	--Arch Duoscreen
 	gap_x = 10,									-- pixels between right or left border
-	gap_y = 30,									-- pixels between bottom or left border
+	gap_y = 0,									-- pixels between bottom or left border
 	minimum_height = 1440,						-- minimum height of window
 	minimum_width = 360,						-- minimum width of window
 	maximum_width = 360,	    				-- maximum width of window
@@ -148,28 +148,28 @@ ${endif}
 #arrows
 # ${image ~/.conky/assets/arrow-up.png -p 300,0 -s 20x20} ${downspeedf enp4s0 3} / ${upspeedf enp4s0}
 # ${image ~/.conky/assets/arrow-down.png -p 400,0 -s 20x20} ${downspeedf enp4s0 3} / ${upspeedf enp4s0}
-${color 555}${downspeedgraph enp4s0 50,175}${color}${goto 185}${color 555}${upspeedgraph enp4s0 50,175}${color}
-${color bbb}${voffset -20}${hr 1}${voffset}${color}
+${downspeedgraph  enp4s0 50,175 #eeeeee #cccccc }${goto 185}${upspeedgraph enp4s0 50,175  #eeeeee #cccccc}
+${voffset -20}${hr 1}${voffset}
 D ${downspeed enp4s0} ${alignr}${upspeed enp4s0} U
 
 
 
 #CPU
-${color 555}${cpugraph}${color}
-${color bbb}${voffset -20}${hr 1 }${voffset}${color}
-${freq_g}${font Cantarell:size=8} GHz${font}${alignr}${cpu}%${color bbb} 
+${cpugraph  #eeeeee #cccccc }
+${voffset -20}${hr 1 }${voffset}
+${freq_g}${font Cantarell:size=8} GHz${font}${alignr}${cpu}% 
 ${voffset 2}${cpubar 10,0}
 ${voffset -2}${goto 0}${cpubar cpu0 5,82}${goto 93}${cpubar cpu6  5,82}${goto 185}${cpubar cpu12 5,82}${goto 277}${cpubar cpu18 5,82}
 ${voffset -4}${goto 0}${cpubar cpu1 5,82}${goto 93}${cpubar cpu7  5,82}${goto 185}${cpubar cpu13 5,82}${goto 277}${cpubar cpu19 5,82} 
 ${voffset -4}${goto 0}${cpubar cpu2 5,82}${goto 93}${cpubar cpu8  5,82}${goto 185}${cpubar cpu14 5,82}${goto 277}${cpubar cpu20 5,82} 
 ${voffset -4}${goto 0}${cpubar cpu3 5,82}${goto 93}${cpubar cpu9  5,82}${goto 185}${cpubar cpu15 5,82}${goto 277}${cpubar cpu21 5,82} 
 ${voffset -4}${goto 0}${cpubar cpu4 5,82}${goto 93}${cpubar cpu10 5,82}${goto 185}${cpubar cpu16 5,82}${goto 277}${cpubar cpu22 5,82} 
-${voffset -4}${goto 0}${cpubar cpu5 5,82}${goto 93}${cpubar cpu11 5,82}${goto 185}${cpubar cpu16 5,82}${goto 277}${cpubar cpu23 5,82}${color}
+${voffset -4}${goto 0}${cpubar cpu5 5,82}${goto 93}${cpubar cpu11 5,82}${goto 185}${cpubar cpu16 5,82}${goto 277}${cpubar cpu23 5,82}
 ${top name 1}${alignr}${top cpu 1}%
 ${top name 2}${alignr}${top cpu 2}%
 ${top name 3}${alignr}${top cpu 3}%
 ${top name 4}${alignr}${top cpu 4}%
-${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+${voffset -5}${hr 1 }${voffset}
 
 
 
@@ -182,30 +182,30 @@ ${alignr}PCIe ${nvidia pcieutil}%
 
 
 # MEM
-${color 555}${memgraph}${color}
-${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+${memgraph  #eeeeee #cccccc}
+${voffset -20}${hr 1 }${voffset}
 $memperc%${alignr}$mem ($memfree) / $memmax
 ${membar 10,0}
 ${top_mem name 1}${alignr}${alignr}${top_mem mem_vsize 1}
 ${top_mem name 2}${alignr}${alignr}${top_mem mem_vsize 2}
 ${top_mem name 3}${alignr}${alignr}${top_mem mem_vsize 3}
-${top_mem name 4}${alignr}${alignr}${top_mem mem_vsize 4}${color}
-${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+${top_mem name 4}${alignr}${alignr}${top_mem mem_vsize 4}
+${voffset -5}${hr 1 }${voffset}
 
 
 
 
-${color 555}${diskiograph_read /dev/nvme1n1p4 50,175}${color}${goto 185}${color 555}${diskiograph_write /dev/nvme1n1p4 50,175}
-${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+${diskiograph_read /dev/nvme1n1p4 50,175  #eeeeee #cccccc }${goto 185}${diskiograph_write /dev/nvme1n1p4 50,175  #eeeeee #cccccc}
+${voffset -20}${hr 1 }${voffset}
 ${diskio_read /dev/nvme1n1p4}${alignr}${diskio_write /dev/nvme1n1p4}
-${voffset 1}${color bbb}${fs_bar 10,0 /}${color}
+${voffset 1}${fs_bar 10,0 /}
 ${fs_used /}${goto 165}/${alignr}${fs_size /}
-${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+${voffset -5}${hr 1 }${voffset}
 
-${color 555}${diskiograph_read /dev/nvme1n1p3 50,175}${color}${goto 185}${color 555}${diskiograph_write /dev/nvme1n1p3 50,175}
-${color bbb}${voffset -20}${hr 1 }${voffset}${color}
+${diskiograph_read /dev/nvme1n1p3 50,175  #eeeeee #cccccc }${goto 185}${diskiograph_write /dev/nvme1n1p3 50,175  #eeeeee #cccccc}
+${voffset -20}${hr 1 }${voffset}
 ${diskio_read /dev/nvme1n1p3}${alignr}${diskio_write /dev/nvme1n1p3}
-${voffset 1}${color bbb}${fs_bar 10,0 /home}${color}
+${voffset 1}${fs_bar 10,0 /home}
 ${fs_used /home}${goto 165}/home${alignr}${fs_size /home}
-${color bbb}${voffset -5}${hr 1 }${voffset}${color}
+${voffset -5}${hr 1 }${voffset}
 ]];
