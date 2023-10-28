@@ -23,4 +23,4 @@ stow ansible
 command -v zsh | sudo tee -a /etc/shells
 
 # use zsh as default shell
-chsh -s $(which zsh)
+# chsh -s $(which zsh)
