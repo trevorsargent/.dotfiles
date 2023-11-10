@@ -1,3 +1,2 @@
-export OPENAI_KEY="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"
-
+# OPENAI_KEY set in secrets.local.zsh
 alias c="chatgpt"
