@@ -1,0 +1,97 @@
+/**
+ * rofi -dump-theme output 
+ * Rofi version: 1 7 3
+ **/
+* {
+	fg: 				#fffa;
+	fg-dim: 			#fff6;
+
+	bg:				#000d;
+	bg-lift:			#222d;
+}
+window {
+	width: 				100%;
+	height: 			100%;
+	padding:		  	40% 30%;
+	background-color: 		@bg;
+}
+mainbox {
+	background-color: 		transparent;
+}
+message {
+	padding:	  		1px;
+	border-color: 			@fg;
+	border:	   			2px 0px 0px ;
+}
+textbox {
+	text-color: 			@fg;
+	background-color: 		transparent;
+}
+listview {
+	padding:	  		16px 0px 0px;
+	scrollbar:			false;
+	border-color: 			@fg;
+	spacing:	  		4px;
+	background-color:		transparent;
+}
+element {
+	padding: 			1px;
+	border:				0;
+	text-color:			@fg-dim;
+	background-color:		transparent;
+}
+
+element selected {
+	text-color:			@fg;
+}
+element-text {
+	background-color: 		inherit;
+	text-color:	   		inherit;
+}
+mode-switcher {
+	border-color:			@fg-dim;
+	border:	   			2px 0px 0px;
+}
+button {
+	spacing:			0;
+	text-color:			@fg-dim;
+}
+button selected {
+	text-color:			@bg;
+}
+inputbar {
+	padding:			1px;
+	spacing:			0;
+	background-color: 		transparent;
+	text-color:			@fg;
+	children:			[
+						"prompt",
+						"textbox-prompt-colon",
+						"entry",
+						"case-indicator"
+					];
+}
+entry {
+	background-color:		transparent;
+}
+case-indicator {
+	spacing:			0;
+	background-color: 		transparent;
+	text-color:			@fg;
+}
+entry {
+	spacing:			0;
+	text-color:			@fg;
+}
+prompt {
+	background-color:		transparent;
+	spacing:			0;
+	text-color:			@fg;
+}
+textbox-prompt-colon {
+	margin:	 			0px 0.3000em 0.0000em 0.0000em;
+	expand:				false;
+	str:				":";
+	text-color:			@fg;
+	background-color:		transparent;
+}
