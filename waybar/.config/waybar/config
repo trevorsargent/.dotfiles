@@ -1,27 +1,23 @@
 {
-    // "layer": "top", // Waybar at top layer
-    
-     "position": "bottom", // Waybar position (top|bottom|left|right)
-    
-    "height": 10, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
+  // "layer": "top", // Waybar at top layer
 
-    // Load Modules
-    "include": [
-        "~/.config/waybar/modules.json"
-    ],    
-    "modules-left": [
-    ],
-    "modules-center": [
-        "hyprland/workspaces"
-    ],
-    "modules-right": [
-        "pulseaudio", 
-        "cpu", 
-        "memory", 
-        "clock"
-    ]
+  "position": "bottom", // Waybar position (top|bottom|left|right)
+
+  "spacing": 4, // Gaps between modules (4px)
+  // Choose the order of the modules
+
+  // Load Modules
+  "include": ["~/.config/waybar/modules.json"],
+  "modules-left": ["tray"],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": [
+    "pulseaudio",
+    "custom/spacer",
+    "cpu",
+    "custom/spacer",
+    "memory",
+    "custom/spacer",
+    "clock"
+  ],
+  "reload_style_on_change": true
 }
