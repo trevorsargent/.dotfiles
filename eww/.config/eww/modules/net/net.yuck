@@ -1,0 +1,7 @@
+(defwidget net []
+  
+  (box :class "group" :orientation "v"
+    (label :class "caption" :text {round(EWW_NET['enp12s0']['NET_UP'] / 1024 / 1024, 2)})
+    (label :class "caption" :text {round(EWW_NET['enp12s0']['NET_DOWN'] / 1024 / 1024, 2)})
+  )
+)

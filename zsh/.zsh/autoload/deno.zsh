@@ -1,0 +1,1 @@
+#  export PATH="/home/trevor/.deno/bin:$PATH"

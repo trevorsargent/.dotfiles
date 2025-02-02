@@ -1,0 +1,29 @@
+(defvar clock_open false)
+
+
+(defwidget clock []
+  (box
+    :orientation "v"
+    :space-evenly false
+    :valign "end"
+    (eventbox
+      :hexpand "true"
+      :onhover "eww update clock_open=true"
+      :onhoverlost "eww update clock_open=false"
+      (box  :orientation "h" :space-evenly "false" :halign "end"
+        (revealer  :reveal clock_open :transition "slideleft"
+          (box :orientation "h" :spacing 5 :space-evenly "false" :width BOX :class "date"
+            (label :class "group" :text {formattime(EWW_TIME, "%a")})
+            (box :class "group" :orientation "h" :spacing 4
+              (label  :text {formattime(EWW_TIME, "%b")})
+              (label  :text {formattime(EWW_TIME, "%d")})
+              (label  :text {formattime(EWW_TIME, "%Y")})
+            )
+          )
+        )
+        
+        (label :class "group" :text {formattime(EWW_TIME, "%R")} :width BOX)
+      )
+    )
+  )
+)

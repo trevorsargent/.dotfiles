@@ -1,0 +1,13 @@
+@import "../clock/clock.scss";
+@import "../music/music.scss";
+@import "../cpu/cpu.scss";
+@import "../ram/ram.scss";
+@import "../disk//disk.scss";
+@import "../usage/usage.scss";
+
+.bar-widget {
+    @include window;
+    padding: 4px;
+    margin: 4px;
+    margin-left: 0;
+}

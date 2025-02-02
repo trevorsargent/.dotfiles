@@ -1,0 +1,46 @@
+
+(defvar open_music false)
+
+(deflisten mpris :initial "{}"
+"scripts/mpris.sh")
+
+
+(deflisten mpris_positions :initial "{}"
+"scripts/positions.sh")
+
+(defwidget music_progress []
+  (box
+    :valign "end"
+    (transform
+      :scale-x "${mpris_positions[mpris.name].position / mpris.length * 100}%"
+      (box :class "mus-progress" :height 2)
+    )
+  )
+)
+
+
+(defwidget music_info []
+  (box :orientation "h" :space-evenly false :class "group"  :spacing 4
+    (box :orientation "h" :space-evenly false
+      (label :halign "start" :class "music-title"  :text {mpris.title} :halign "end")
+      (revealer
+        :transition "slideright"
+        :reveal {open_music}
+        (label :halign "start" :class "music-artist"  :text {mpris.artist} :halign "end")
+      )
+    )
+  )
+)
+
+(defwidget music []
+  (eventbox
+    :class "music-button"
+    :onhover "eww update open_music=true"
+    :onhoverlost "eww update open_music=false"
+    (overlay
+      (music_info)
+      (music_progress)
+    )
+  )
+)
+

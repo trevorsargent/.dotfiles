@@ -139,7 +139,10 @@ window#waybar {
     animation-direction: alternate;
 }
 
+#tray {
+	margin-left: 10px;
 
+}
 
 #tray > .passive {
     -gtk-icon-effect: dim;

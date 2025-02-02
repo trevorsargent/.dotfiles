@@ -1,0 +1,1 @@
+eww update open_disk=$1

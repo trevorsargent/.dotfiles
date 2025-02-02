@@ -1,0 +1,12 @@
+@import "../clock/clock.scss";
+@import "../music_dock/music.scss";
+@import "../cpu/cpu.scss";
+@import "../ram/ram.scss";
+@import "../disk//disk.scss";
+@import "../usage/usage.scss";
+
+.dock-widget {
+    // @include window;
+    margin: 10px;
+    margin-top: 0px
+}

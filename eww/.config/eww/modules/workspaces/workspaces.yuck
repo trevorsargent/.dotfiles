@@ -1,0 +1,62 @@
+; (deflisten workspaces :initial "[{'window'}]"
+; "modules/workspaces/scripts/workspaces.sh")
+
+(deflisten workspaces  "hyprland-workspaces _")
+
+
+(defwidget workspace [ws]
+  (label :text "•" :class {ws.class})
+)
+
+(defwidget workpace_group [wsg]
+  (box
+    :orientation "h"
+    :class "workpace-group"
+    :space-evenly false
+    :spacing 10
+    (for ws in {wsg.workspaces}
+      (workspace :ws ws)
+    )
+  )
+)
+
+
+(defwidget workspace_container [display_name]
+  
+  
+  (box
+    :orientation "h"
+    :class "workpace-group"
+    :space-evenly false
+    
+    (for wsg in workspaces
+      (revealer
+        :transition "slideleft"
+        :reveal {wsg.name == display_name}
+        (workpace_group :wsg wsg)
+      )
+    )
+  )
+)
+
+; (defwindow workspaces_left
+  ;   :monitor 1
+  ;   :geometry (geometry
+  ;   :anchor "bottom center")
+  ;   :exclusive false
+  ;   :namespace "eww"
+  ;   (box :orientation "v"
+    ;     (workspace :display_name "DP-2")
+  ;   )
+; )
+
+; (defwindow workspaces_right
+  ;   :monitor 0
+  ;   :geometry (geometry
+  ;   :anchor "bottom center")
+  ;   :exclusive false
+  ;   :namespace "eww"
+  ;   (box :orientation "v"
+    ;     (workspace :display_name "DP-1")
+  ;   )
+; )

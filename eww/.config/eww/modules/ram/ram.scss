@@ -1,0 +1,17 @@
+.ram-bar {
+    background-color: rgba($color: #ffffff, $alpha: .1);
+    border-radius: 5px;
+}
+
+.ram-bar-used {
+    border-radius: 5px;
+    background-color: rgba($color: #ffffff, $alpha: .1);
+}
+
+.ram-label {
+    background-color: transparent;
+}
+
+.ram-info {
+    margin-right: 4px;
+}

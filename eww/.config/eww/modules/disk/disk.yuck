@@ -1,0 +1,37 @@
+(defvar open_disk "")
+
+(defwidget disk [mountpoint]
+  (eventbox
+    :onhover {"modules/disk/set_open_disk.sh" + " " + mountpoint}
+    :onhoverlost "eww update open_disk=false"
+    :halign "end"
+    (box :space-evenly false
+      (revealer :reveal {open_disk==mountpoint} :transition "slideleft"
+        (box  :class "group disk-info" :orientation "vertical"
+          (label :text {round(EWW_DISK[mountpoint].used / 1024 / 1024 / 1024, 2) + "G"} :class "caption")
+          (label :text {round(EWW_DISK[mountpoint].total / 1024 / 1024 / 1024, 2) + "G"} :class "caption")
+        )
+      )
+      (overlay
+        ; fade
+        (box :class "disk-bar"  :space-evenly "false" :height BOX :width BOX :hexpand "true" :valign "end"
+          (box :class "disk-bar-used" :height {round(EWW_DISK[mountpoint].used_perc / 100 * BOX, 0)} :hexpand "true" :space-evenly "false" :valign "end")
+        )
+        (revealer :reveal {open_disk==mountpoint}
+          (label :class "caption" :text  {round(EWW_DISK[mountpoint].used_perc, 1) + "%"})
+        )
+        (revealer :reveal {open_disk!=mountpoint}
+          (label :class "caption" :text {mountpoint})
+        )
+        
+      )
+    )
+  )
+)
+
+(defwidget disks []
+  (box :orientation "vertical" :space-evenly false :spacing 4
+    (disk :mountpoint "/" :open false)
+  )
+)
+

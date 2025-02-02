@@ -1,0 +1,17 @@
+(defwidget meter [value label]
+  (box :height {BOX} :width {BOX}
+    (overlay
+      (circular-progress :value value :thickness 2 :start-at 75 :class "meter"  )
+      (label :text label :halign "center" :valign "center" :class "caption")
+    )
+  )
+)
+
+
+(defwidget usage []
+  (box :orientation "h" :halign "end" :spacing 4
+    (meter :value {EWW_CPU.avg} :label "CPU")
+    (meter :value {EWW_RAM.used_mem_perc} :label "MEM")
+    (meter :value {EWW_DISK['/'].used_perc} :label "/")
+  )
+)

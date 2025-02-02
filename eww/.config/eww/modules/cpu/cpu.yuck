@@ -1,0 +1,41 @@
+(defvar h 10)
+(defvar cpu_open false)
+
+(defwidget cpu []
+  (eventbox
+    :onhover "eww update cpu_open=true"
+    :onhoverlost "eww update cpu_open=false"
+    (box :halign "end" :space-evenly "false" :orientation "h"
+      (revealer :reveal {cpu_open} :transition "slideleft"
+        (all_cpus)
+      )
+      (revealer :reveal {!cpu_open} :transition "slideleft"
+        (overlay
+          (box :class "avg" :height BOX :space-evenly "false"
+            (box :class "avg-fill" :width BOX :height {round(EWW_CPU.avg / 100 * BOX, 0)}
+              :valign "end"
+            )
+          )
+          (label :text "CPU" :class "caption")
+        )
+      )
+    )
+  )
+)
+
+(defwidget core [usage]
+  (box :class "core" :width h :space-evenly "false"
+    (box :class "core-fill" :width h :height {round(usage / 100 * BOX, 0)}
+      :valign "end"
+    )
+  )
+)
+
+(defwidget all_cpus []
+  (box :class "cpu-widget" :orientation "h" :spacing 5
+    (for entry in {EWW_CPU.cores}
+      (core :usage {entry.usage})
+    )
+  )
+)
+
