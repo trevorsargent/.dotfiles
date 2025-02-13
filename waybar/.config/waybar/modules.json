@@ -41,15 +41,6 @@
     "separate-outputs": true
   },
 
-  // Rofi Application Launcher
-  "custom/appmenu": {
-    "format": "Apps",
-    "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings",
-    "on-click": "rofi -show drun -replace",
-    "on-click-right": "~/.config/ml4w/scripts/keybindings.sh",
-    "tooltip": false
-  },
-
   // Power Menu
   // "custom/exit": {
   //     "format": "",
@@ -166,7 +157,6 @@
       "headphone": "",
       "hands-free": "",
       "headset": "",
-      "hands-free": "",
       "phone": "",
       "portable": "",
       "car": "",

@@ -2,6 +2,8 @@
  * rofi -dump-theme output 
  * Rofi version: 1 7 3
  **/
+
+
 * {
 	fg: 				#fffa;
 	fg-dim: 			#fff6;

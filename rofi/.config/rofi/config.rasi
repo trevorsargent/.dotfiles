@@ -1,1 +1,6 @@
 @theme "~/.config/rofi/trev.rasi"
+
+configuration {
+	combi-hide-mode-prefix: true;
+	modes: "window,drun";
+}
