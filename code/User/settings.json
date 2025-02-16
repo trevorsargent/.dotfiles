@@ -1,3 +1,4 @@
 {
     "window.menuBarVisibility": "toggle",
+    "git.confirmSync": false,
 }
