@@ -7,6 +7,7 @@ stow rofi
 stow hypr
 stow waybar
 stow eww
+stow mako -t ~/.config/mako
 sudo stow keyd -t /etc/keyd
 stow code -t ~/.config/Code\ -\ OSS --adopt
 # add zsh as a login shell
