@@ -1,0 +1,94 @@
+(defvar sleeping false)
+
+
+(defwidget naptime_clock []
+    (box :class "naptime-widget" :orientation "h" :space-evenly true :spacing 4  
+      (label :text {formattime(EWW_TIME, "%R")} :class "clock")
+    )
+)
+
+(defwidget naptime []
+    (box :class "naptime-widget" :orientation "h" :space-evenly true :spacing 4  
+    )
+)
+
+(defwidget dark []
+    (box :class "dark-widget" :orientation "h" :space-evenly true :spacing 4  
+    )
+)
+
+(
+  defwindow naptime_main
+  :monitor 1 ; Can be either a number (X11 and Wayland) or an output name (X11 only).
+  :geometry ; Geometry of the window.
+  (
+    geometry ; Geometry of the window.
+    :anchor "top left" ; Values include top, center, bottom and left, center, right.
+    :x "0" ; Position of the window. Values may be provided in px or %.
+    :y "0" ; Will be relative to anchor.
+    :width "100%" ; Values may be provided in px or %.
+    :height "100%"
+  )
+  
+  :exclusive "false" ; Whether the compositor should reserve space for the window.
+  :focusable "false" ; This is necessary for any widgets that use the keyboard to work.
+  
+  (naptime_clock)
+)
+
+(
+  defwindow naptime_secondary
+  :monitor 0 ; Can be either a number (X11 and Wayland) or an output name (X11 only).
+  :geometry ; Geometry of the window.
+  (
+    geometry ; Geometry of the window.
+    :anchor "top left" ; Values include top, center, bottom and left, center, right.
+    :x "0" ; Position of the window. Values may be provided in px or %.
+    :y "0" ; Will be relative to anchor.
+    :width "100%" ; Values may be provided in px or %.
+    :height "100%"
+  )
+  
+  :exclusive "false" ; Whether the compositor should reserve space for the window.
+  :focusable "false" ; This is necessary for any widgets that use the keyboard to work.
+  
+  (naptime)
+)
+
+(
+  defwindow dark_main
+  :monitor 1 ; Can be either a number (X11 and Wayland) or an output name (X11 only).
+  :geometry ; Geometry of the window.
+  (
+    geometry ; Geometry of the window.
+    :anchor "top left" ; Values include top, center, bottom and left, center, right.
+    :x "0" ; Position of the window. Values may be provided in px or %.
+    :y "0" ; Will be relative to anchor.
+    :width "100%" ; Values may be provided in px or %.
+    :height "100%"
+  )
+  
+  :exclusive "false" ; Whether the compositor should reserve space for the window.
+  :focusable "false" ; This is necessary for any widgets that use the keyboard to work.
+  
+  (dark)
+)
+
+(
+  defwindow dark_secondary
+  :monitor 0 ; Can be either a number (X11 and Wayland) or an output name (X11 only).
+  :geometry ; Geometry of the window.
+  (
+    geometry ; Geometry of the window.
+    :anchor "top left" ; Values include top, center, bottom and left, center, right.
+    :x "0" ; Position of the window. Values may be provided in px or %.
+    :y "0" ; Will be relative to anchor.
+    :width "100%" ; Values may be provided in px or %.
+    :height "100%"
+  )
+  
+  :exclusive "false" ; Whether the compositor should reserve space for the window.
+  :focusable "false" ; This is necessary for any widgets that use the keyboard to work.
+  
+  (dark)
+)

@@ -51,8 +51,10 @@ $inversePrimary: #006a62;
 
 
 // @import "modules/bar/bar.scss";
-@import "modules/dock/dock.scss";
-@import "modules/workspaces/workspaces.scss"
+// @import "modules/dock/dock.scss";
+// @import "modules/workspaces/workspaces.scss"
+
+@import "modules/sleep/sleep.scss"
 
 // @import "scss/bar.scss";
 // @import "scss/powermenu.scss";
