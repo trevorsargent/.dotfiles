@@ -16,9 +16,15 @@ node_version() {
 }
 
 set_prompt() {
-    nvm use >/dev/null 2>/dev/null
+    # nvm use >/dev/null 2>/dev/null
     PROMPT="%F{$HOST_COLOR}[%f %~ %F{$HOST_COLOR}]%f %(!.#.)"
-    RPROMPT="$(parse_git_branch)$(node_version) %F{$HOST_COLOR}%m%f"
+    # RPROMPT="$(parse_git_branch)$(node_version) %F{$HOST_COLOR}%m%f"
+    RPROMPT="$(parse_git_branch) %F{$HOST_COLOR}%m%f"
 }
 
-set_prompt
+# set_prompt
+
+autoload -U add-zsh-hook
+add-zsh-hook -Uz precmd set_prompt
+
+# set_prompt

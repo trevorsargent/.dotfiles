@@ -10,6 +10,7 @@ stow eww
 stow mako -t ~/.config/mako
 sudo stow keyd -t /etc/keyd
 stow code -t ~/.config/Code\ -\ OSS --adopt
+stow alacritty -t ~/.config/alacritty
 # add zsh as a login shell
 command -v zsh | sudo tee -a /etc/shells
 

@@ -1,4 +1,72 @@
 {
-    "window.menuBarVisibility": "toggle",
-    "git.confirmSync": false,
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "cmake.configureOnOpen": true,
+  "cmake.showOptionsMovedNotification": false,
+  "debug.allowBreakpointsEverywhere": true,
+  "debug.onTaskErrors": "showErrors",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.renderWhitespace": "all",
+  "explorer.confirmDragAndDrop": false,
+  "explorer.fileNesting.patterns": {
+    "*.db": "${capture}.${extname}-*",
+    "*.db3": "${capture}.${extname}-*",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.s3db": "${capture}.${extname}-*",
+    "*.sdb": "${capture}.${extname}-*",
+    "*.sqlite": "${capture}.${extname}-*",
+    "*.sqlite3": "${capture}.${extname}-*",
+    "*.ts": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "Cargo.toml": "Cargo.lock",
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+    "tsconfig.json": "tsconfig.*.json"
+  },
+  "files.associations": {
+    "*.ts": "typescript"
+  },
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.replaceTagsWhenPull": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "gitlens.views.scm.grouped.views": {
+    "branches": true,
+    "commits": true,
+    "contributors": true,
+    "launchpad": false,
+    "remotes": true,
+    "repositories": false,
+    "searchAndCompare": true,
+    "stashes": true,
+    "tags": true,
+    "worktrees": true
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "python.envFile": "",
+  "remote.SSH.userLocalServer": false,
+  "rust-analyzer.inlayHints.implicitDrops.enable": true,
+  "rust-analyzer.procMacro.ignored": {
+    "napi-derive": ["napi"]
+  },
+  "svelte.enable-ts-plugin": true,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.env.linux": {
+    "PATH": "/usr/bin/pnpm"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "window.menuBarVisibility": "toggle",
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false
 }
