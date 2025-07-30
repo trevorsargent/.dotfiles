@@ -1,39 +1,60 @@
-; (deflisten workspaces :initial "[{'window'}]"
-; "modules/workspaces/scripts/workspaces.sh")
+(deflisten workspaces :initial "[]"
+"modules/workspaces/scripts/workspaces.sh")
 
-(deflisten workspaces  "hyprland-workspaces _")
-
+(deflisten active_workspace "modules/workspaces/scripts/get_active_workspace.sh")
 
 (defwidget workspace [ws]
   (label :text "•" :class {ws.class})
 )
+(defvar show false)
 
-(defwidget workpace_group [wsg]
-  (box
-    :orientation "h"
-    :class "workpace-group"
-    :space-evenly false
-    :spacing 10
-    (for ws in {wsg.workspaces}
-      (workspace :ws ws)
+(defwidget workspace_group [wsg display_name active]
+  (overlay
+    
+    (box
+      :orientation "v"
+      ; :class {active_workspace?.[display_name] == wsg.name ? "active workspace" : "workspace"}
+      :space-evenly false
+      :class "workspace"
+      :width 80
+      ; (for ws in {wsg.workspaces}
+        ; (workspace :ws ws)
+      ; )
+      
+      (revealer
+        :transition "slideup"
+        :duration "500ms"
+        :reveal {!active}
+        (box :class "active" :height 20
+        )
+      )
     )
+    ; (label :text {(wsg.id -1) % 5 +1} )
+    ; (label :text {active_workspace?.[display_name] ?: "No Active Workspace"} :class "ws")
   )
 )
 
 
 (defwidget workspace_container [display_name]
-  
-  
   (box
     :orientation "h"
-    :class "workpace-group"
+    :class "workspace-group"
     :space-evenly false
+    ; weird hack to make sure the active workspace variable loads
+    (revealer
+      :transition "slideleft"
+      
+      (box
+        (label :text {active_workspace?.[display_name] ?: "No Active Workspace"} :class "ws-label")
+      )
+    )
     
     (for wsg in workspaces
+      ; hide workspaces on other monitors
       (revealer
         :transition "slideleft"
-        :reveal {wsg.name == display_name}
-        (workpace_group :wsg wsg)
+        :reveal "${wsg.monitor == display_name}"
+        (workspace_group :wsg wsg  :display_name display_name :active {active_workspace?.[display_name] == wsg.name})
       )
     )
   )

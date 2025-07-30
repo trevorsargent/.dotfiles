@@ -1,24 +1,39 @@
 .music-image {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-
-    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: 0px 0px 50px rgba(255, 255, 255, .05);
+    border-radius: 8px;
 }
 
-.music-info {
-    margin-right: 4px;
-    padding-right: .5rem;
-    padding-left: .5rem;
-}
-
-.times {
-    background-color: rgba($color: #000000, $alpha: .7);
-    padding: .2rem;
-    border-radius: 5px;
+.music-title {
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
 .music-artist {
     opacity: .5;
-    font-size: .7rem;
+    font-size: 1rem;
 }
+
+.music-times {
+    font-size: 2rem;
+    opacity: .5;
+}
+
+.dock-widget {
+    padding: 10px;
+}
+
+.music-info {
+    min-width: 150px;
+    
+}
+
+.mus-progress {
+    background-color: $lightBg;
+}
+
+.music-progress-container{
+    background-color: $darkBg;
+    margin: 10px 0;
+}
+

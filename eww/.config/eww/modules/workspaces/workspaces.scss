@@ -5,3 +5,24 @@
 .workspace-on-screen {
     color : rgba(255, 255, 255, 1);
 }
+
+.workspace-group {
+    margin-top: 1px;
+}
+
+.ws {
+
+}
+
+.workspace {
+    background-color: black;
+    margin: 0 5px;
+    background-color: $lightBg;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 4px;
+}
+
+.active {
+    background-color: $darkBg;
+}
+

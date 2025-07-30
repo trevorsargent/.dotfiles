@@ -1,54 +1,56 @@
-(defvar open_music false)
+(defvar open_music true)
 
 (deflisten mpris :initial "{}"
 "scripts/mpris.sh")
 
 
-(deflisten mpris_positions :initial "{}"
-"scripts/positions.sh")
+(deflisten mpris_positions :initial "{}" "scripts/positions.sh")
+
+(defwidget music_progress []
+  (box
+    :valign "end"
+    :class "music-progress-container"
+    (transform
+      :scale-x "${(mpris_positions?.[mpris.name]?.position ?: 0) / (mpris?.length ?: 1) * 100}%"
+      (box :class "mus-progress" :height 2)
+      
+    )
+  )
+)
 
 (defwidget music_image []
-  (overlay
-    (box :orientation "h" :space-evenly false :class "music-image" :style "background-image: url('${mpris.artUrl}'); background-size: cover;" :height BOX :width BOX)
-    (revealer :transition "crossfade" :reveal {open_music && (mpris == "{}" ? false : mpris.name == "" ? false : true)}
-      (box :orientation "v" :hexpand true :class "times" :vexpand true :valign "center" :height BOX :width BOX
-        (label :hexpand true :text {mpris_positions[mpris.name]?.positionStr})
-        (label :hexpand true :text {mpris.lengthStr})
-      )
-    )
+  (box :class "music-image" :style "background-image: url('${mpris.artUrl}'); background-size: cover;" :width 280 :height 280)
+)
+
+
+(defwidget music_times []
+  (box :class "music-times" :orientation "h" :space-evenly false :spacing 4 :halign "end"
+    (label :text {mpris_positions[mpris.name]?.positionStr})
+    (label :text " / ")
+    (label :text {mpris.lengthStr})
   )
 )
 
 (defwidget music_info []
-  (revealer :transition "slideleft" :reveal {open_music && (mpris == "{}" ? false : mpris.name == "" ? false : true)}
-    (box :orientation "h" :class "music" :space-evenly false
+  (box :orientation "v" :space-evenly false :class "music-info"
+    (label :halign "start" :class "music-title"  :text {mpris.title} :halign "start")
+    (box
+      :orientation "h" :space-evenly true
       
-      (box :orientation "h" :space-evenly false :class "music-info group"  :spacing 4
-        (box :orientation "v" :space-evenly false
-          (label :halign "start" :class "music-title"  :text {mpris.title} :halign "end")
-          (label :halign "start" :class "music-artist"  :text {mpris.artist} :halign "end")
-        )
-        
-        
-      )
-      
+      (label :halign "start" :class "music-artist"  :text {mpris.artist} :halign "start")
     )
+    (music_progress)
+    (music_times)
   )
 )
-
 
 
 (defwidget music []
-  (revealer :transition "slideup" :reveal {mpris == "{}" ? false : mpris.name == "" ? false : true}
-    (eventbox
-      :class "music-button"
-      :onhover "eww update open_music=true"
-      :onhoverlost "eww update open_music=false"
-      (box :space-evenly "false" :halign "end"
-        (music_info)
-        (music_image)
-      )
-    )
+  (box :orientation "h" :space-evenly false :class "music-widget" :spacing 10
+    (music_image)
+    ; (box :class "music-info-container" :orientation "v" :space-evenly false
+      ;   (box :vexpand true)
+      ;   (music_info)
+    ; )
   )
 )
-

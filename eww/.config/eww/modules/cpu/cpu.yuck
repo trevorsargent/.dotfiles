@@ -1,4 +1,4 @@
-(defvar h 10)
+(defvar h 30)
 (defvar cpu_open false)
 
 (defwidget cpu []
@@ -24,15 +24,20 @@
 )
 
 (defwidget core [usage]
-  (box :class "core" :width h :space-evenly "false"
-    (box :class "core-fill" :width h :height {round(usage / 100 * BOX, 0)}
-      :valign "end"
+  (overlay
+    (box :class "core" :width h :space-evenly "false"
+      (box :class "core-fill"
+        
+        :width h :height {round(usage / 100 * BOX, 0)}
+        :valign "end"
+      )
     )
+    ; (label :text "${usage}%" )
   )
 )
 
 (defwidget all_cpus []
-  (box :class "cpu-widget" :orientation "h" :spacing 5
+  (box :class "cpu-widget" :orientation "h" :spacing 5 :height BOX
     (for entry in {EWW_CPU.cores}
       (core :usage {entry.usage})
     )

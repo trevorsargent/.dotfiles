@@ -1,3 +1,18 @@
-.date {
-    margin-right: 4px;
+.clock {
+    margin-bottom: -10px;
+}
+
+.time {
+    font-size: 4rem;
+    opacity: .5;
+}
+
+.date-widget {
+    margin-right: 10px;
+    opacity: .5;
+    margin-bottom: -5px;
+}
+
+.dom, .dow {
+    font-size: 1rem;
 }

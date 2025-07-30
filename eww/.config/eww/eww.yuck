@@ -1,1 +1,2 @@
-(include "modules/sleep/sleep.yuck")
+; (include "modules/sleep/sleep.yuck")
+(include "modules/dock/dock.yuck")

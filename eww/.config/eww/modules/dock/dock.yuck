@@ -1,5 +1,7 @@
+(defvar BOX 50)
+
 (include "modules/clock/clock.yuck")
-(include "modules/music_dock/music.yuck")
+(include "modules/music/music.yuck")
 (include "modules/cpu/cpu.yuck")
 (include "modules/disk/disk.yuck")
 (include "modules/ram/ram.yuck")
@@ -8,14 +10,40 @@
 (include "modules/workspaces/workspaces.yuck")
 
 (defwidget dock []
-  (box :class "dock-widget" :orientation "h" :space-evenly false :spacing 4
+  (box :class "dock-widget" :orientation "h" :space-evenly false :spacing 10
     
-    (workspace_container :display_name "DP-2")
-    (box :hexpand true)
-    (music)
+    (music_image)
+    
+    (box :orientation "v" :hexpand true :space-evenly false
+      (box :orientation "h" :space-evenly false :spacing 30
+        (workspace_container :display_name "DP-4")
+        (box :hexpand true)
+        (workspace_container :display_name "DP-5")
+      )
+      
+      (box :vexpand true)
+      
+      
+      (all_cpus)
+      ; (usage)
+      
+      (box :vexpand true)
+      
+      (box :orientation "h" :space-evenly false :spacing 10
+        (music_info)
+        (box :hexpand true)
+        (box :orientation "h" :space-evenly false :spacing 10
+          (disk :mountpoint "/")
+          (ram)
+          (net)
+        )
+        (box :hexpand true)
+        
+        (clock)
+      )
+      
+    )
     ; (net)
-    ; (usage)
-    (clock)
   )
   
   
@@ -23,14 +51,18 @@
 
 (
   defwindow dock
-  :monitor 1 ; Can be either a number (X11 and Wayland) or an output name (X11 only).
+  :monitor 3 ; Can be either a number (X11 and Wayland) or an output name (X11 only).
+  :focusable false
+  :stacking "bg"
   :geometry ; Geometry of the window.
+  
   (
     geometry ; Geometry of the window.
     :anchor "center bottom" ; Values include top, center, bottom and left, center, right.
     :x "0" ; Position of the window. Values may be provided in px or %.
     :y "0" ; Will be relative to anchor.
     :width "100%" ; Values may be provided in px or %.
+    :height "100%"
   )
   
   :exclusive "true" ; Whether the compositor should reserve space for the window.
