@@ -29,11 +29,12 @@
 }
 
 .mus-progress {
-    background-color: $lightBg;
+    background-color: white;
+    opacity: .5;
 }
 
 .music-progress-container{
-    background-color: $darkBg;
+    background-color: $lightBg;
     margin: 10px 0;
 }
 
