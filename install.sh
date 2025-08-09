@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# install dependencies
+sudo pacman -Syu --noconfirm hyprland waybar eww mako stow git alacritty
+
 # stow dotfiles
 stow git
 stow zsh
