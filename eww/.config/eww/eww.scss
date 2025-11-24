@@ -1,8 +1,9 @@
 * {
     all: unset;
+    color: rgba(255, 255, 255, 0.5);
     font-family: JetBrainsMono;
-    font-weight: bold;
-    font-size: .8rem;
+    font-weight: 900;
+    font-size: 1rem;
 }
 
 @mixin window {
@@ -11,14 +12,15 @@
     border-radius: 5px;
 }
 
-.group {
-    // background-color: rgba(255, 255, 255, .05);
-    padding:  .25rem;
-    border-radius: 5px;
+.caption {
+    font-weight: 500;
 }
 
-.caption {
-    font-size: .7rem;
+.group {
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 $darkBg: rgb(15, 15, 15);
@@ -54,3 +56,5 @@ $lightBg: rgb(40, 40, 40);
 // @import "scss/picker.scss";
 
 @import "modules/dock/dock.scss";
+
+@import "modules/progress/progress.scss";

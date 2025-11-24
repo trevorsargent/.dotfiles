@@ -16,7 +16,7 @@
       ; :class {active_workspace?.[display_name] == wsg.name ? "active workspace" : "workspace"}
       :space-evenly false
       :class "workspace"
-      :width 80
+      :width 50
       ; (for ws in {wsg.workspaces}
         ; (workspace :ws ws)
       ; )
@@ -35,26 +35,23 @@
 )
 
 
-(defwidget workspace_container [display_name]
+(defwidget workspace_container [display_name start end]
   (box
     :orientation "h"
     :class "workspace-group"
     :space-evenly false
     ; weird hack to make sure the active workspace variable loads
-    (revealer
-      :transition "slideleft"
-      
-      (box
-        (label :text {active_workspace?.[display_name] ?: "No Active Workspace"} :class "ws-label")
+    
+    (box :orientation "h" :spacing 10
+      (for wsg in {jq(workspaces, ".[${start}:${end}]")}
+        ; hide workspaces on other monitors
+        (workspace_group :wsg wsg  :display_name display_name :active {active_workspace?.[display_name] == wsg.name})
       )
     )
-    
-    (for wsg in workspaces
-      ; hide workspaces on other monitors
-      (revealer
-        :transition "slideleft"
-        :reveal "${wsg.monitor == display_name}"
-        (workspace_group :wsg wsg  :display_name display_name :active {active_workspace?.[display_name] == wsg.name})
+    (revealer
+      :transition "slideleft"
+      (box
+        (label :text {active_workspace?.[display_name] ?: "No Active Workspace"} :class "ws-label")
       )
     )
   )

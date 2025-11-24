@@ -1,3 +1,6 @@
+(include "modules/progress/progress.yuck")
+
+
 (defvar h 30)
 (defvar cpu_open false)
 
@@ -24,22 +27,20 @@
 )
 
 (defwidget core [usage]
-  (overlay
-    (box :class "core" :width h :space-evenly "false"
-      (box :class "core-fill"
-        
-        :width h :height {round(usage / 100 * BOX, 0)}
-        :valign "end"
-      )
-    )
-    ; (label :text "${usage}%" )
+  (box :class "core" :space-evenly "false" :hexpand true
+    ; (label :class "core-label" :text {round(usage, 1) + "%"} :halign "center")
+    (progress_bar :percent {usage})
   )
 )
 
 (defwidget all_cpus []
-  (box :class "cpu-widget" :orientation "h" :spacing 5 :height BOX
-    (for entry in {EWW_CPU.cores}
-      (core :usage {entry.usage})
+  (box :orientation "v" :hexpand true :vexpand true :class "group px" :height BOX
+    (for start in {[0, 6, 12, 18]}
+      (box :class "row" :orientation "h" :spacing 10 :hexpand true  :valign "center"
+        (for entry in {jq(EWW_CPU.cores, ".[${start}:(${start} + 6)]")}
+          (core :usage {entry.usage} )
+        )
+      )
     )
   )
 )

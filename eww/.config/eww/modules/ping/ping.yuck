@@ -1,0 +1,56 @@
+(deflisten bzero "modules/ping/ping.sh b0")
+(deflisten bone "modules/ping/ping.sh b1")
+(deflisten btwo "modules/ping/ping.sh b2")
+
+
+(deflisten enginefour "modules/ping/ping.sh engine4.lucid.host")
+(deflisten enginefive "modules/ping/ping.sh engine5.lucid.host")
+(deflisten enginesix "modules/ping/ping.sh engine6.lucid.host")
+
+(deflisten microone "modules/ping/ping.sh micro-001.lucid.host")
+(deflisten microtwo "modules/ping/ping.sh micro-002.lucid.host")
+(deflisten microthree "modules/ping/ping.sh micro-003.lucid.host")
+
+(deflisten twogpu "modules/ping/ping.sh 2gpu-win-001.lucid.host")
+(deflisten mark "modules/ping/ping.sh trev-win.lucid.host")
+(deflisten pixels "modules/ping/ping.sh pixels.rship.io")
+(deflisten nasa "modules/ping/ping.sh 10.0.1.118")
+
+(defwidget ping [name var]
+  (box :space-evenly false :orientation "h"
+    (label :text {name} :halign "start" :class "caption")
+    (box :hexpand true)
+    (label :text {var}  :halign "start")
+  )
+)
+
+
+(defwidget ping_dock []
+  
+  (box :orientation "h" :space-evenly true :spacing 30 :hexpand true :class "group px py" :height BOX
+    
+    (box :orientation "v"
+      (ping :name "b0" :var {bzero})
+      (ping :name "b1" :var {bone})
+      (ping :name "b2" :var {btwo})
+    )
+    (box :orientation "v"
+      (ping :name "pdx1" :var {enginefour})
+      (ping :name "pdx2" :var {enginefive})
+      (ping :name "pdx3" :var {enginesix})
+    )
+    
+    (box :orientation "v"
+      (ping :name "nyc1" :var {microone})
+      (ping :name "nyc2" :var {microtwo})
+      (ping :name "nyc3" :var {microthree})
+    )
+    
+    
+    (box :orientation "v"
+      (ping :name "pixels" :var {pixels})
+      (ping :name "mark" :var {mark})
+      (ping :name "nasa" :var {nasa})
+    )
+  )
+)

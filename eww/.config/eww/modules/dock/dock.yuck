@@ -1,4 +1,4 @@
-(defvar BOX 50)
+(defvar BOX 75)
 
 (include "modules/clock/clock.yuck")
 (include "modules/music/music.yuck")
@@ -8,35 +8,45 @@
 (include "modules/usage/usage.yuck")
 (include "modules/net/net.yuck")
 (include "modules/workspaces/workspaces.yuck")
+(include "modules/ping/ping.yuck")
 
 (defwidget dock []
-  (box :class "dock-widget" :orientation "h" :space-evenly false :spacing 10
+  (box :class "debug":class "dock-widget" :orientation "h" :space-evenly false :spacing 15
     
     (music_image)
     
     (box :orientation "v" :hexpand true :space-evenly false
-      (box :orientation "h" :space-evenly false :spacing 30
-        (workspace_container :display_name "DP-4")
+      (box :orientation "h" :space-evenly false :spacing 10
+        (workspace_container :display_name "DP-4" :start 10 :end 15)
         (box :hexpand true)
-        (workspace_container :display_name "DP-5")
+        (workspace_container :display_name "DP-5" :start 5 :end 10)
       )
       
-      (box :vexpand true)
+      (box :vexpand true )
       
-      
-      (all_cpus)
-      ; (usage)
-      
-      (box :vexpand true)
+      (box :orientation "h" :hexpand true  :spacing 30  :space-evenly false
+        
+        (box :orientation "v" :hexpand true :spacing 15
+          (all_cpus)
+          (ping_dock)
+        )
+        (box :orientation "v" :space-evenly false :hexpand false :vexpand true :spacing 15
+          
+          (box :orientation "h" :spacing 15
+            (disk :mountpoint "/")
+            (ram)
+          )
+          
+          (box :orientation "h" :spacing 15
+            (net :iface "enp12s0" :name "Ethernet")
+            (net :iface "wt0" :name "Netbird")
+          )
+        )
+      )
       
       (box :orientation "h" :space-evenly false :spacing 10
         (music_info)
-        (box :hexpand true)
-        (box :orientation "h" :space-evenly false :spacing 10
-          (disk :mountpoint "/")
-          (ram)
-          (net)
-        )
+        
         (box :hexpand true)
         
         (clock)

@@ -1,7 +1,21 @@
-(defwidget net []
+(include "modules/progress/progress.yuck")
+
+(defwidget net [iface name]
   
-  (box :class "group" :orientation "v"
-    (label :class "caption" :text {round(EWW_NET['enp12s0']['NET_UP'] / 1024 / 1024, 2)})
-    (label :class "caption" :text {round(EWW_NET['enp12s0']['NET_DOWN'] / 1024 / 1024, 2)})
+  (box :class "group" :orientation "v" :space-evenly false :spacing 5 :height BOX
+    
+    (label :text {name} :halign "start")
+    
+    (box :vexpand true )
+    (progress_bar :percent {0})
+    (box :vexpand true )
+    (box :orientation "h" :space-evenly false :spacing 10
+      (label :text "UP" :class "caption")
+      (label  :text {round(EWW_NET[iface]['NET_UP'] / 1024 / 1024, 2)} )
+      (box)
+      (label :text "DOWN" :class "caption")
+      (label  :text {round(EWW_NET[iface]['NET_DOWN'] / 1024 / 1024, 2)} )
+    )
+    
   )
 )

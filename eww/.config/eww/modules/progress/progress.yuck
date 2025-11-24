@@ -1,0 +1,12 @@
+(defwidget progress_bar [percent]
+  (box
+    :valign "end"
+    :height 2
+    :hexpand true
+    :class "progress-container"
+    (transform
+      :scale-x "${(percent + 0.01)}%"
+      (box :class "progress" :height 2)
+    )
+  )
+)

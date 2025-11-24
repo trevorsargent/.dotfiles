@@ -1,30 +1,26 @@
-(defvar show_mem false)
+(include "modules/progress/progress.yuck")
+
+(defvar show_mem true)
 
 
 (defwidget ram []
-  (eventbox
-    :onhover "eww update show_mem=true"
-    :onhoverlost "eww update show_mem=false"
-    :halign "end"
-    (box :space-evenly false
-      (revealer :reveal show_mem :transition "slideleft"
-        (box  :class "group ram-info" :orientation "vertical"
-          (label :text {round(EWW_RAM.used_mem / 1024 / 1024 / 1024, 2) + "G"} :class "caption")
-          (label :text {round(EWW_RAM.total_mem / 1024 / 1024 / 1024, 2) + "G"} :class "caption")
-        )
-      )
-      (overlay
-        ; fade
-        (box :class "ram-bar"  :space-evenly "false" :height BOX :width BOX
-          (box :class "ram-bar-used" :height {round(EWW_RAM.used_mem_perc / 100 * BOX, 0)} :hexpand "true" :space-evenly "false" :valign "end")
-        )
-        (revealer :reveal show_mem
-          (label :class "caption" :text  {round(EWW_RAM.used_mem_perc, 1) + "%"})
-        )
-        (revealer :reveal {!show_mem}
-          (label :class "caption" :text "RAM")
-        )
-      )
+  (box :space-evenly false :orientation "v" :valign "center" :spacing 5 :class "group" :height BOX
+    
+    (box :orientation "h"
+      (label  :text "RAM" :halign "start")
+      (box :hexpand true)
+      (label  :text {round(EWW_RAM.used_mem_perc, 1) + "%"} :halign "end")
     )
+    (box :vexpand true )
+    
+    (progress_bar :percent {EWW_RAM.used_mem_perc})
+    (box :vexpand true )
+    
+    (box   :orientation "h"  :space-evenly false  :hexpand true
+      (label :text {round(EWW_RAM.used_mem / 1024 / 1024 / 1024, 0) + "G"}  :class "caption" )
+      (box :hexpand true)
+      (label :text {round(EWW_RAM.total_mem / 1024 / 1024 / 1024, 0) + "G"} :class "caption" )
+    )
+    
   )
 )
