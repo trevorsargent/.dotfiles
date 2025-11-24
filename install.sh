@@ -13,6 +13,7 @@ stow hypr
 stow waybar
 stow eww
 stow mako -t ~/.config/mako
+stow wofi -t ~/.config/wofi
 sudo stow keyd -t /etc/keyd
 stow code -t ~/.config/Code\ -\ OSS --adopt
 stow alacritty -t ~/.config/alacritty
