@@ -1,0 +1,22 @@
+(include "modules/progress/progress.yuck")
+
+(deflisten sensors :initial '{"cpu_temp": 0, "gpu_temp": 0, "case_fan": 0}'
+  "modules/sensors/sensors.sh")
+
+(defwidget sensor_card [label value unit]
+  (box :class "group" :orientation "v" :space-evenly false :spacing 5 :height BOX :width 63
+    (label :text label :halign "start")
+    (box :vexpand true)
+    (progress_bar :percent {0})
+    (box :vexpand true)
+    (label :text "${value}${unit}" :halign "center" :class "sensor-value")
+  )
+)
+
+(defwidget sensors_panel []
+  (box :orientation "h" :space-evenly false :spacing 16
+    (sensor_card :label "CPU" :value {sensors.cpu_temp} :unit "°")
+    (sensor_card :label "GPU" :value {sensors.gpu_temp} :unit "°")
+    (sensor_card :label "Fan" :value {sensors.case_fan} :unit "")
+  )
+)
