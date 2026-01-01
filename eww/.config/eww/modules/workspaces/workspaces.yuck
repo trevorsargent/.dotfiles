@@ -3,6 +3,12 @@
 
 (deflisten active_workspace "modules/workspaces/scripts/get_active_workspace.sh")
 
+; SVG-based workspace layout variables (for future use)
+(defvar WS_WIDTH 64)
+(defvar WS_HEIGHT 36)
+(defvar WS_PAD 2)
+(defvar WS_SPACING 10)
+
 (defwidget workspace [ws]
   (label :text "•" :class {ws.class})
 )
@@ -34,6 +40,20 @@
   )
 )
 
+; SVG-based workspace item (for future use)
+; (defwidget workspace_item [wsg active]
+;   (box
+;     :class {active ? "workspace workspace-active-bg" : "workspace"}
+;     :width WS_WIDTH
+;     :height WS_HEIGHT
+;     (image
+;       :path {wsg.svg_path}
+;       :image-width {WS_WIDTH - WS_PAD * 2}
+;       :image-height {WS_HEIGHT - WS_PAD * 2}
+;       :preserve-aspect-ratio false
+;     )
+;   )
+; )
 
 (defwidget workspace_container [display_name start end]
   (box
