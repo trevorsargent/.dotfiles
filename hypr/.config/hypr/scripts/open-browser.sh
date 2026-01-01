@@ -1,1 +1,1 @@
-google-chrome-stable --disable-gpu --enable-features=UseOzonePlatform --ozone-platform=wayland 
+google-chrome-stable --ozone-platform=x11 --enable-features=Vulkan,DefaultANGLEVulkan,VulkanFromANGLE --enable-unsafe-webgp
