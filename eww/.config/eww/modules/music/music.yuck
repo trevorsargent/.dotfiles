@@ -33,11 +33,11 @@
 
 (defwidget music_info []
   (box :orientation "v" :space-evenly false :class "music-info" :valign "end"
-    (label :halign "start" :class "music-title"  :text {mpris.title} :halign "start")
+    (label :halign "start" :class "music-title" :text {mpris.title} :limit-width 71)
     (box
       :orientation "h" :space-evenly true
-      
-      (label :halign "start" :class "music-artist"  :text {mpris.artist} :halign "start")
+
+      (label :halign "start" :class "music-artist" :text {mpris.artist} :limit-width 50)
     )
     (music_progress)
     ; (music_times)
