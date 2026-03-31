@@ -1,27 +1,27 @@
-alias npm="pnpm"
+alias npm="bun"
 alias rl="source ~/.zshrc"
 alias ca="git commit -am"
 alias g="git"
 alias gs="git status"
 alias gp="git push"
 alias ddv="npm run dev"
-alias cd="j"
+[[ $- == *i* ]] && alias cd="j"
 
 git_root(){
     # Try to cd to the repo root; fallback to $HOME if not in a git repo
     local root
     if root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
-        cd "$root" || cd ~
+        builtin cd "$root" || builtin cd ~
     else
-        cd ~
+        builtin cd ~
     fi
 }
 
 git_dirs(){
     local root
-    
+
     if root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
-        cd "$root"
+        builtin cd "$root"
         git ls-files | xargs -n 1 dirname | uniq
     else
         find . -type d
@@ -42,3 +42,6 @@ fzfcode() {
 }
 
 alias cc="fzfcode"
+
+alias m="moon"
+alias mr="moon run"
