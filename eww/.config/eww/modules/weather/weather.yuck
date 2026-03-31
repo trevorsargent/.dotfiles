@@ -1,0 +1,9 @@
+(deflisten weather :initial "{\"temp\":\"--\",\"humidity\":\"--%\"}"
+  "modules/weather/weather.sh")
+
+(defwidget weather []
+  (box :class "date-widget weather" :orientation "v" :space-evenly false
+    (label :class "weather-temp" :text {weather.temp} :halign "start" :vexpand true)
+    (label :class "weather-humidity" :text {weather.humidity} :halign "start")
+  )
+)
