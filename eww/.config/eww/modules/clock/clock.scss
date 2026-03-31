@@ -1,3 +1,7 @@
+@import "../weather/weather.scss";
+@import "../mouse/mouse.scss";
+@import "../headset/headset.scss";
+
 .clock {
     margin-bottom: -10px;
 }
@@ -11,6 +15,6 @@
     margin-bottom: -5px;
 }
 
-.dom, .dow {
+.dow, .dom {
     font-size: 1rem;
 }

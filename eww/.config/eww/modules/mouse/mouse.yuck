@@ -1,0 +1,10 @@
+(deflisten mouse_battery :initial '{"percent": -1, "charging": false}'
+  "modules/mouse/mouse.sh")
+
+(defwidget mouse_battery []
+  (box :class "date-widget mouse-battery" :orientation "v" :space-evenly false
+    :visible {mouse_battery.percent >= 0}
+    (label :class "mouse-icon" :text {mouse_battery.charging ? "󰍽" : "󰍽"} :halign "center" :vexpand true)
+    (label :class "mouse-percent" :text "${mouse_battery.percent}%" :halign "start")
+  )
+)

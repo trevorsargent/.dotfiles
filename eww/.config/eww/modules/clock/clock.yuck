@@ -1,5 +1,8 @@
 (defvar clock_open false)
 
+(include "modules/weather/weather.yuck")
+(include "modules/mouse/mouse.yuck")
+(include "modules/headset/headset.yuck")
 
 (defwidget clock []
   (box
@@ -20,12 +23,14 @@
       
       ;   (label  :text {formattime(EWW_TIME, "%R")} :width BOX)
     ; )
-    
-    
-    (box :orientation "v" :space-evenly false :valign "center" :class "date-widget"
-      (label :class "dow" :text {formattime(EWW_TIME, "%a")})
-      (box :vexpand true)
-      (label :class "dom" :text {formattime(EWW_TIME, "%d")})
+    (box :orientation "h" :space-evenly false :valign "center" :class "clock-info"
+      (headset_battery)
+      (mouse_battery)
+      (weather)
+      (box :orientation "v" :space-evenly false :class "date-widget"
+        (label :class "dow" :text {formattime(EWW_TIME, "%a")} :vexpand true)
+        (label :class "dom" :text {formattime(EWW_TIME, "%d")})
+      )
     )
     (label :class "time" :text {formattime(EWW_TIME, "%R")})
   )

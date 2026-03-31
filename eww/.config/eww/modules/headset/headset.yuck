@@ -1,0 +1,10 @@
+(deflisten headset_battery :initial '{"percent": -1, "available": false}'
+  "modules/headset/headset.sh")
+
+(defwidget headset_battery []
+  (box :class "date-widget headset-battery" :orientation "v" :space-evenly false
+    :visible {headset_battery.available}
+    (label :class "headset-icon" :text "󰋎" :halign "center" :vexpand true)
+    (label :class "headset-percent" :text "${headset_battery.percent}%" :halign "start")
+  )
+)
