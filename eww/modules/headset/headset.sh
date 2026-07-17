@@ -10,16 +10,19 @@ get_headset_battery() {
   local percent
   percent=$(echo "$output" | grep 'Level:' | grep -oP '\d+(?=%)')
 
-  if [ "$status" = "BATTERY_AVAILABLE" ] && [ -n "$percent" ]; then
-    echo "{\"percent\": ${percent}, \"available\": true}"
+  local charging=false
+  [ "$status" = "BATTERY_CHARGING" ] && charging=true
+
+  if { [ "$status" = "BATTERY_AVAILABLE" ] || [ "$charging" = true ]; } && [ -n "$percent" ]; then
+    echo "{\"percent\": ${percent}, \"available\": true, \"charging\": ${charging}}"
   else
-    echo '{"percent": -1, "available": false}'
+    echo '{"percent": -1, "available": false, "charging": false}'
   fi
 }
 
 get_headset_battery
 
 while true; do
-  sleep 30
+  sleep 10
   get_headset_battery
 done
