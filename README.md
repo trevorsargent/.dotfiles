@@ -16,10 +16,7 @@ https://github.com/vinceliuice/Fluent-gtk-theme.git
 
 # Requirements
 
-autojump (aur)
-
 hyprland
-hyprpaper
 stow (arch)
 keyd
 

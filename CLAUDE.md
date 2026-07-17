@@ -18,31 +18,32 @@ stow -R <package>           # Restow (remove then deploy)
 sudo stow keyd -t /etc/keyd # System-level configs need sudo
 ```
 
-Most packages stow to `~/` (which maps to `~/.config/`, `~/.zshrc`, etc.). Some use custom targets:
-- `mako`, `wofi`, `alacritty`: stow to `~/.config/<name>`
-- `code`: stows to `~/.config/Code - OSS` with `--adopt` flag
+Packages come in two flavors:
+- **`~/.config` packages** (`alacritty`, `eww`, `hypr`, `mako`, `spotifyd`, `wofi`): flat directories — files sit at the package root and are stowed with an explicit target, e.g. `stow eww -t ~/.config/eww` (`mkdir -p` the target first)
+- **Home-directory packages** (`git`, `zsh`, `osx`): mirror the home directory layout and are stowed plainly, e.g. `zsh/.zshrc` → `~/.zshrc`
+
+Special targets:
 - `keyd`: stows to `/etc/keyd` (requires sudo)
 
 ## Architecture
 
 ### Modular Structure
-Each top-level directory is an independent Stow package containing configuration for one application. The directory structure inside each package mirrors the target filesystem structure.
-
-Example: `zsh/.zshrc` → `~/.zshrc`, `hypr/.config/hypr/` → `~/.config/hypr/`
+Each top-level directory is an independent Stow package containing configuration for one application.
 
 ### Key Components
 
 #### Hyprland (Window Manager)
-- **Location**: `hypr/.config/hypr/`
+- **Location**: `hypr/`
 - **Architecture**: Modular configuration split across focused files
   - `hyprland.conf` - Entry point that sources all other configs
   - Split configs: `monitor.conf`, `binds.conf`, `autostart.conf`, `general.conf`, `decoration.conf`, `animations.conf`, `windowrules.conf`, `input.conf`, `cursor.conf`, `environments.conf`
-  - `scripts/` - Helper scripts for waybar toggle, hyprpaper reload, app launching
+  - `scripts/` - Helper scripts for app launching, window switching
+- **Background**: solid black everywhere — desktop via `misc:background_color` in `conf/misc.conf` (no wallpaper daemon), lock screen via `background { color }` in `hyprlock.conf`
 - **Plugins**: Uses `hyprsplit` (install via hyprpm)
 - **Bindings**: Includes custom PS4 controller bindings in `binds.conf`
 
 #### Eww (Widget System)
-- **Location**: `eww/.config/eww/`
+- **Location**: `eww/`
 - **Architecture**: Component-based modular system
   - `eww.yuck` includes modules, `eww.scss` contains global styles
   - Each module in `modules/<name>/`: has `.yuck` (widget definition) and `.scss` (styling)
@@ -75,7 +76,7 @@ Example: `zsh/.zshrc` → `~/.zshrc`, `hypr/.config/hypr/` → `~/.config/hypr/`
 ## Requirements
 
 **Core dependencies**:
-- Hyprland, hyprpaper, stow, keyd, autojump (AUR)
+- Hyprland, stow, keyd, zoxide
 - Hyprland plugins: hyprsplit (via `hyprpm add https://github.com/shezdy/hyprsplit`)
 
 **Dev tools** (configured in zsh):
@@ -89,8 +90,8 @@ Example: `zsh/.zshrc` → `~/.zshrc`, `hypr/.config/hypr/` → `~/.config/hypr/`
 
 **Adding new zsh functionality**: Create a new file in `zsh/.zsh/autoload/` (it will be auto-sourced by `init.zsh`)
 
-**Adding new eww widgets**: Create `eww/.config/eww/modules/<name>/` with `<name>.yuck` and `<name>.scss`, then include in `eww.yuck`
+**Adding new eww widgets**: Create `eww/modules/<name>/` with `<name>.yuck` and `<name>.scss`, then include in `eww.yuck`
 
-**Hyprland config changes**: Edit the appropriate config file in `hypr/.config/hypr/conf/` rather than the main `hyprland.conf`
+**Hyprland config changes**: Edit the appropriate config file in `hypr/conf/` rather than the main `hyprland.conf`
 
 **Machine-specific settings**: Use `*.local.zsh` files (gitignored) for secrets or local overrides
