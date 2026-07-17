@@ -43,5 +43,5 @@ fzfcode() {
 
 alias cc="fzfcode"
 
-alias m="moon"
-alias mr="moon run"
+# Open rship + sibling repos as one Zed workspace
+zr() { zed ~/Code/rship ~/Code/myko ~/Code/hyphae }

@@ -10,5 +10,7 @@ function rename_function {
 
 function cd {
     builtin cd "$@"
-    set_prompt
+    local cd_ret=$?
+    set_prompt 2>/dev/null
+    return $cd_ret
 }
