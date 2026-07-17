@@ -10,6 +10,7 @@
 (include "modules/workspaces/workspaces.yuck")
 (include "modules/ping/ping.yuck")
 (include "modules/sensors/sensors.yuck")
+(include "modules/gpu/gpu.yuck")
 
 (defwidget dock []
   (box :class "dock-widget" :orientation "h" :space-evenly false :spacing 15
@@ -25,14 +26,12 @@
 
       (box :vexpand true )
 
-      (box :orientation "h" :hexpand true  :spacing 30  :space-evenly false
+      (box :orientation "h" :hexpand true  :spacing 15  :space-evenly false
 
         (box :orientation "v" :hexpand true :space-evenly false :spacing 15
-          (box :orientation "h" :hexpand true :spacing 15
-            (box :hexpand true
-              (all_cpus)
-            )
-            (sensors_panel)
+          (box :orientation "h" :hexpand true :spacing 15 :space-evenly true
+            (cpu_combined)
+            (gpu_combined)
           )
           (ping_dock)
         )

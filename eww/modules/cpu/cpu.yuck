@@ -27,16 +27,15 @@
 )
 
 (defwidget core [usage]
-  (box :class "core" :space-evenly "false" :hexpand true
-    ; (label :class "core-label" :text {round(usage, 1) + "%"} :halign "center")
+  (box :class "core" :space-evenly "false" :width 22
     (progress_bar :percent {usage})
   )
 )
 
-(defwidget all_cpus []
-  (box :orientation "v" :hexpand true :vexpand true :class "group px" :height BOX
+(defwidget all_cpus_grid []
+  (box :orientation "v" :space-evenly true :vexpand true
     (for start in {[0, 6, 12, 18]}
-      (box :class "row" :orientation "h" :spacing 10 :hexpand true  :valign "center"
+      (box :class "row" :orientation "h" :spacing 5 :valign "center"
         (for entry in {jq(EWW_CPU.cores, ".[${start}:(${start} + 6)]")}
           (core :usage {entry.usage} )
         )
@@ -45,3 +44,15 @@
   )
 )
 
+(defwidget all_cpus []
+  (box :class "group px" :orientation "v" :height BOX
+    (all_cpus_grid)
+  )
+)
+
+(defwidget cpu_combined []
+  (box :class "group" :orientation "h" :height BOX :spacing 6 :space-evenly false :valign "center"
+    (all_cpus_grid)
+    (label :text "${sensors.cpu_temp}°" :valign "center" :class "compute-temp")
+  )
+)

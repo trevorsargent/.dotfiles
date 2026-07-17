@@ -1,0 +1,25 @@
+(include "modules/progress/progress.yuck")
+
+(deflisten gpu :initial '{"util": 0, "mem_used_mib": 0, "mem_total_mib": 0, "mem_perc": 0}'
+  "modules/gpu/gpu.sh")
+
+(defwidget gpu_combined []
+  (box :class "group" :orientation "h" :space-evenly false :valign "center" :spacing 6 :height BOX
+    (box :orientation "v" :space-evenly false :spacing 4 :valign "center" :hexpand true
+      (box :orientation "h"
+        (label :text "GPU" :halign "start")
+        (box :hexpand true)
+        (label :text "${round(gpu.util, 0)}%" :class "caption" :halign "end")
+      )
+      (progress_bar :percent {gpu.util})
+      (box :vexpand true)
+      (box :orientation "h"
+        (label :text "VRAM" :class "caption" :halign "start")
+        (box :hexpand true)
+        (label :text "${round(gpu.mem_used_mib / 1024, 0)}/${round(gpu.mem_total_mib / 1024, 0)}" :class "caption" :halign "end")
+      )
+      (progress_bar :percent {gpu.mem_perc})
+    )
+    (label :text "${sensors.gpu_temp}°" :valign "center" :class "compute-temp")
+  )
+)
