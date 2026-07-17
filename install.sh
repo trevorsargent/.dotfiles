@@ -10,7 +10,7 @@ stow osx
 stow conky
 
 # stow ~/.config packages (flat repo dirs, one per app)
-for pkg in alacritty eww hypr mako rofi spotifyd waybar wofi; do
+for pkg in alacritty eww hypr mako spotifyd waybar wofi; do
   mkdir -p ~/.config/$pkg
   stow $pkg -t ~/.config/$pkg
 done
