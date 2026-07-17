@@ -3,9 +3,9 @@
 (deflisten btwo "modules/ping/ping.sh b2")
 
 
-(deflisten enginefour "modules/ping/ping.sh engine4.lucid.host")
-(deflisten enginefive "modules/ping/ping.sh engine5.lucid.host")
-(deflisten enginesix "modules/ping/ping.sh engine6.lucid.host")
+(deflisten rackone "modules/ping/ping.sh rship-node-01.lucid.host")
+(deflisten racktwo "modules/ping/ping.sh rship-node-02.lucid.host")
+(deflisten rackthree "modules/ping/ping.sh rship-node-03.lucid.host")
 
 (deflisten microone "modules/ping/ping.sh micro-001.lucid.host")
 (deflisten microtwo "modules/ping/ping.sh micro-002.lucid.host")
@@ -35,9 +35,9 @@
       (ping :name "b2" :var {btwo})
     )
     (box :orientation "v"
-      (ping :name "pdx1" :var {enginefour})
-      (ping :name "pdx2" :var {enginefive})
-      (ping :name "pdx3" :var {enginesix})
+      (ping :name "rack1" :var {rackone})
+      (ping :name "rack2" :var {racktwo})
+      (ping :name "rack3" :var {rackthree})
     )
     
     (box :orientation "v"
