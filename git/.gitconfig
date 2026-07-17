@@ -15,3 +15,5 @@
 	required = true
 [merge "theirs"]
 	driver = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
