@@ -18,16 +18,28 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 fi
 
 # Arch Linux
-# install dependencies
-sudo pacman -Syu --noconfirm hyprland eww mako stow git alacritty zoxide fzf
+# install dependencies. keyd belongs here: its config was being stowed to
+# /etc/keyd below while the daemon itself was never installed, so the bindings
+# had simply never been live on a box provisioned by this script.
+sudo pacman -Syu --noconfirm hyprland eww mako stow git alacritty zoxide fzf keyd
 
-./sync.sh
+# Not fatal under `set -e`: sync.sh exits non-zero if any single package fails to
+# stow, and the sudo work below is unrelated to that. Letting one bad package
+# abort the run silently skipped the keyd setup and the shell change.
+./sync.sh || echo "install: sync.sh reported errors, continuing with system setup" >&2
 
 # special targets — kept here rather than in sync.sh because they need sudo, and
 # sync.sh has to stay safe to run unattended from a shell hook
 sudo stow keyd -t /etc/keyd
-# add zsh as a login shell
-command -v zsh | sudo tee -a /etc/shells
+sudo systemctl enable --now keyd
 
-# use zsh as default shell
-chsh -s $(which zsh)
+# add zsh as a login shell. The guard is the point: a bare `tee -a` appends
+# another copy on every run, and one box had accumulated nine before it was
+# noticed.
+ZSH_PATH=$(command -v zsh)
+grep -qxF "$ZSH_PATH" /etc/shells || printf '%s\n' "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+
+# use zsh as default shell, unless it already is — chsh prompts for a password
+# unconditionally, so re-running the installer otherwise asks for one to make no
+# change at all.
+[[ "$(getent passwd "$USER" | cut -d: -f7)" == "$ZSH_PATH" ]] || chsh -s "$ZSH_PATH"
