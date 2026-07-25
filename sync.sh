@@ -147,9 +147,8 @@ stow_pkg() {
         if [[ $src == "$HOME"/* ]]; then
             dest="$BACKUP_ROOT/${src#"$HOME"/}"
         else
-            # No package targets outside $HOME today (keyd is stowed by
-            # install.sh, which needs sudo). Nest anything that does, so a
-            # system path can never collide with a home-relative one.
+            # No package targets outside $HOME today. Nest anything that does,
+            # so a system path can never collide with a home-relative one.
             dest="$BACKUP_ROOT/_root/${src#/}"
         fi
 

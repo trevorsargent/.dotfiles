@@ -39,7 +39,6 @@ https://github.com/vinceliuice/Fluent-gtk-theme.git
 
 hyprland (arch)
 stow
-keyd (arch)
 zoxide, fzf
 
 ### Hyprland Plugins
