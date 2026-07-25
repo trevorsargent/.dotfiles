@@ -1,2 +1,15 @@
 *.local.zsh
-.claude/settings.local.json
+
+# machine-local Claude Code settings — matches both this repo's own .claude/ and
+# the claude package's .claude/, which is why it's not anchored to the root
+**/.claude/settings.local.json
+
+# ~/.claude interleaves config with runtime state, and the claude package holds
+# only the config half. These guard the rest from ever being committed by a stray
+# copy or an over-broad `stow --adopt`: session transcripts, auth, and caches.
+claude/.claude/projects/
+claude/.claude/jobs/
+claude/.claude/file-history/
+claude/.claude/plugins/
+claude/.claude/history.jsonl
+claude/.claude/.credentials.json

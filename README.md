@@ -10,12 +10,18 @@ Cross-platform dotfiles: full Hyprland desktop on Arch Linux, shell + git config
 
 1. Clone this repository
 2. `cd` into `.dotfiles`
-3. Run `./install.sh` — on Arch this installs the full desktop; on macOS it stows just the `zsh`, `git`, and `osx` packages (Homebrew required)
+3. Run `./install.sh` — on Arch this installs the full desktop; on macOS it stows just the `zsh`, `git`, `osx`, and `claude` packages (Homebrew required)
 4. Open up new window to initiate `zsh` shell
 
 ## Colors
 
 if youd like to override the colors, check out the colors.base.zsh. Make a copy of it into colors.local.zsh and change anything you'd like
+
+## Claude Code
+
+The `claude` package syncs Claude Code's config — `CLAUDE.md`, `settings.json`, `agents/`, and hand-written `skills/` — into `~/.claude`. It deliberately leaves out everything else that lives there (session transcripts, credentials, plugin caches), which is the bulk of the directory.
+
+Machine-specific settings go in `~/.claude/settings.local.json`; it stays untracked, same idea as `colors.local.zsh`.
 
 # GTK Theme
 

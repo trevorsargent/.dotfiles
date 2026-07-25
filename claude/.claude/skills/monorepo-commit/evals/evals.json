@@ -1,0 +1,44 @@
+{
+  "skill_name": "monorepo-commit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "commit everything - I've been working on fixing engine timing and lifecycle handling across entities, runtime, and the engine. There are also some changes in hyphae. Break it all into clean commits and push when done.",
+      "expected_output": "Multiple scoped conventional commits: submodule (hyphae) committed first, then parent commits grouped by concern (engine timing, lifecycle nodes, logic nodes, etc.), submodule ref update folded into a relevant commit, then prompted for push with submodules pushed before parent.",
+      "files": [],
+      "assertions": [
+        {"id": "submodule-first", "text": "Submodule commits appear before parent commits"},
+        {"id": "multiple-commits", "text": "Changes grouped into multiple scoped commits"},
+        {"id": "conventional-format", "text": "Conventional commit format used"},
+        {"id": "submodule-ref-update", "text": "Parent commits include submodule pointer update"},
+        {"id": "push-order", "text": "Submodule pushed before parent"},
+        {"id": "push-prompt", "text": "User prompted before push"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I made a small fix in the hyphae submodule, commit and push it",
+      "expected_output": "Commits the hyphae submodule change, then commits the submodule pointer update in the parent repo, pushes hyphae first then parent.",
+      "files": [],
+      "assertions": [
+        {"id": "submodule-first", "text": "Submodule committed before parent"},
+        {"id": "pointer-update", "text": "Parent gets submodule pointer update commit"},
+        {"id": "push-order", "text": "Submodule pushed before parent"},
+        {"id": "push-prompt", "text": "User prompted before push"},
+        {"id": "conventional-format", "text": "Conventional commit format used"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "commit my changes - I refactored some node executor code and added a new logic node",
+      "expected_output": "No submodule changes detected, skips submodule phases. Groups parent changes into logical commits (refactor for executor changes, feat for new logic node). Prompts for push.",
+      "files": [],
+      "assertions": [
+        {"id": "no-submodule-commits", "text": "No submodule commits attempted"},
+        {"id": "multiple-commits", "text": "Changes split into at least 2 logical commits"},
+        {"id": "conventional-format", "text": "Conventional commit format used"},
+        {"id": "push-prompt", "text": "User prompted before push"}
+      ]
+    }
+  ]
+}

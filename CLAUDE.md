@@ -8,7 +8,7 @@ This is a personal cross-platform dotfiles repository managed with **GNU Stow**:
 
 ## Installation & Deployment
 
-**Installation**: Run `./install.sh` to stow all configurations. This creates symlinks from this repo to their target locations. On Arch it installs the full desktop; on macOS it installs deps via Homebrew and stows only `git`, `zsh`, and `osx`.
+**Installation**: Run `./install.sh` to stow all configurations. This creates symlinks from this repo to their target locations. On Arch it installs the full desktop; on macOS it installs deps via Homebrew and stows only `git`, `zsh`, `osx`, and `claude`.
 
 **Key commands**:
 ```bash
@@ -20,7 +20,9 @@ sudo stow keyd -t /etc/keyd # System-level configs need sudo
 
 Packages come in two flavors:
 - **`~/.config` packages** (`alacritty`, `eww`, `hypr`, `mako`, `spotifyd`, `wofi`): flat directories — files sit at the package root and are stowed with an explicit target, e.g. `stow eww -t ~/.config/eww` (`mkdir -p` the target first)
-- **Home-directory packages** (`git`, `zsh`, `osx`): mirror the home directory layout and are stowed plainly, e.g. `zsh/.zshrc` → `~/.zshrc`
+- **Home-directory packages** (`git`, `zsh`, `osx`, `claude`): mirror the home directory layout and are stowed plainly, e.g. `zsh/.zshrc` → `~/.zshrc`
+
+The `claude` package is the one exception worth knowing about: `~/.claude` interleaves config with ~1.4GB of runtime state (session transcripts, credentials, caches), so the package deliberately holds only `CLAUDE.md`, `settings.json`, `agents/`, and the hand-written `skills/`. `install.sh` runs `mkdir -p ~/.claude/skills` first so stow links those entries individually rather than folding the whole tree into one symlink — folding would route Claude Code's runtime writes into this repo. Never add `projects/`, `jobs/`, `plugins/`, or `.credentials.json` (the `.gitignore` guards these). Machine-specific overrides go in `~/.claude/settings.local.json`, which stays untracked — the same split as `*.local.zsh`.
 
 Special targets:
 - `keyd`: stows to `/etc/keyd` (requires sudo)

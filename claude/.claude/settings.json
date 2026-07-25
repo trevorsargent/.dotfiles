@@ -1,0 +1,62 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ls /home/trevor/Code/cargo-flux/LICENSE* /home/trevor/Code/cargo-flux/license*)",
+      "Bash(cargo publish:*)",
+      "Bash(cargo check:*)",
+      "Bash(cargo test:*)",
+      "Bash(cargo run:*)",
+      "Bash(tmux new-session:*)",
+      "Bash(tmux new-window:*)",
+      "Bash(tmux send-keys:*)",
+      "Bash(tmux list-sessions:*)",
+      "Bash(tmux ls)",
+      "Bash(tmux ls:*)",
+      "Bash(tmux list-windows:*)",
+      "Bash(tmux has-session:*)",
+      "Bash(tmux kill-session:*)",
+      "Bash(tmux kill-window:*)",
+      "Bash(tmux rename-window:*)",
+      "Bash(tmux capture-pane:*)",
+      "Bash(tmux attach:*)"
+    ],
+    "defaultMode": "auto"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "marshal-shim statusline"
+  },
+  "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
+    "remember@claude-plugins-official": false,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": false,
+    "playwright@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {},
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "autoCompactEnabled": true,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "mcpServers": {
+    "marshal": {
+      "command": "marshal-shim",
+      "env": {
+        "MARSHAL_DAEMON_ADDRESS": "${MARSHAL_DAEMON_ADDRESS:-ws://marshal-01.lucid.host:6155}"
+      }
+    }
+  },
+  "model": "opus[1m]"
+}

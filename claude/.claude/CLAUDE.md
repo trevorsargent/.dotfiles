@@ -1,0 +1,2 @@
+- never add yourself as a coauthor
+- do not reference that the commit was generated with claude code

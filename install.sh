@@ -11,6 +11,12 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   stow git
   stow zsh
   stow osx
+  # ~/.claude mixes config with runtime state (session transcripts, credentials),
+  # so pre-create the directories: that forces stow to link the individual config
+  # entries instead of folding the whole tree into one symlink, which would send
+  # Claude Code's runtime writes into this repo.
+  mkdir -p ~/.claude/skills
+  stow claude
   # zsh is already the default login shell on macOS
   exit 0
 fi
@@ -23,6 +29,9 @@ sudo pacman -Syu --noconfirm hyprland eww mako stow git alacritty zoxide fzf
 stow git
 stow zsh
 stow osx
+# pre-create the dirs first — see the macOS branch above for why
+mkdir -p ~/.claude/skills
+stow claude
 
 # stow ~/.config packages (flat repo dirs, one per app)
 for pkg in alacritty eww hypr mako spotifyd wofi; do
