@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a personal Linux dotfiles repository for a Hyprland-based desktop environment on Arch Linux, managed using **GNU Stow** for symlink-based configuration management.
+This is a personal cross-platform dotfiles repository managed with **GNU Stow**: a Hyprland-based desktop environment on Arch Linux, plus the shell (`zsh`), `git`, and `osx` packages shared with macOS. Shell config must stay portable across both — guard platform-specific paths (`/snap/bin`, Homebrew prefixes) on existence rather than hardcoding, and never hardcode `/home/trevor` or `/Users/trevor` (use `$HOME`).
 
 ## Installation & Deployment
 
-**Installation**: Run `./install.sh` to stow all configurations. This creates symlinks from this repo to their target locations.
+**Installation**: Run `./install.sh` to stow all configurations. This creates symlinks from this repo to their target locations. On Arch it installs the full desktop; on macOS it installs deps via Homebrew and stows only `git`, `zsh`, and `osx`.
 
 **Key commands**:
 ```bash
