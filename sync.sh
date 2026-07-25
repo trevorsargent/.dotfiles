@@ -120,12 +120,28 @@ stow_pkg() {
         return 1
     fi
 
-    local rel src
+    local rel src dest
     for rel in "${conflicts[@]}"; do
         src="$target/$rel"
         [[ -e $src || -L $src ]] || continue
-        mkdir -p "$BACKUP_ROOT/$(dirname "$rel")"
-        if mv "$src" "$BACKUP_ROOT/$rel" 2>/dev/null; then
+
+        # Mirror the path under $HOME, not under the stow target. Every ~/.config
+        # package gets its own -t, and mako and wofi both stow a root-level file
+        # named `config` — so a target-relative path puts both at
+        # $BACKUP_ROOT/config and the second mv destroys the first, while still
+        # reporting it safely backed up. A $HOME-relative path can't collide, and
+        # it restores by copying straight back.
+        if [[ $src == "$HOME"/* ]]; then
+            dest="$BACKUP_ROOT/${src#"$HOME"/}"
+        else
+            # No package targets outside $HOME today (keyd is stowed by
+            # install.sh, which needs sudo). Nest anything that does, so a
+            # system path can never collide with a home-relative one.
+            dest="$BACKUP_ROOT/_root/${src#/}"
+        fi
+
+        mkdir -p "$(dirname "$dest")"
+        if mv "$src" "$dest" 2>/dev/null; then
             log "  moved aside: $src"
             backed_up=1
         else
