@@ -5,7 +5,7 @@ alias g="git"
 alias gs="git status"
 alias gp="git push"
 alias ddv="npm run dev"
-[[ $- == *i* ]] && alias cd="j"
+[[ $- == *i* ]] && (( $+commands[zoxide] )) && alias cd="j"
 
 git_root(){
     # Try to cd to the repo root; fallback to $HOME if not in a git repo

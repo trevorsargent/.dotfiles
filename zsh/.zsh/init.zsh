@@ -1,5 +1,8 @@
 export ZSH="$HOME/.zsh"
 
+# keep PATH/fpath free of duplicates as the autoload modules prepend to them
+typeset -gU path fpath
+
 source $ZSH/utils.zsh
 source $ZSH/autoload/homebrew.zsh
 
