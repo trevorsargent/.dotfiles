@@ -25,6 +25,11 @@
     ],
     "defaultMode": "auto"
   },
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
   "statusLine": {
     "type": "command",
     "command": "marshal-shim statusline"
