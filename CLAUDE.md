@@ -10,6 +10,10 @@ This is a personal cross-platform dotfiles repository managed with **GNU Stow**:
 
 **Installation**: Run `./install.sh` to stow all configurations. This creates symlinks from this repo to their target locations. On Arch it installs the full desktop; on macOS it installs deps via Homebrew and stows only `git`, `zsh`, `osx`, and `claude`.
 
+**Deployment lives in `sync.sh`, not `install.sh`.** `install.sh` only installs system dependencies and handles the sudo-requiring targets (`keyd`, `chsh`); everything else defers to `sync.sh`, so re-running the installer and letting the shell re-sync take an identical path. `sync.sh` is idempotent (`stow -R` throughout), concurrency-safe (an atomic `mkdir` lock, since several terminals can start at once), and non-destructive: a real file sitting where a symlink belongs is moved to `~/.dotfiles-backup/<timestamp>/` at its relative path rather than overwritten or left to abort the run. Run it directly, or `dotsync` from any shell.
+
+**The shell hook must stay free.** `zsh/.zsh/autoload/dotfiles.zsh` re-syncs automatically, gated on `.git` being newer than `~/.local/state/dotfiles-sync.stamp`, with a 24h floor to catch drift the repo can't see. Measured overhead is 0ms, and keeping it there constrains what may go in that file: no forks, no network, no `git` invocation. In particular **do not add a `(( $+commands[...] ))` guard** — each lookup walks `$PATH` and measured at ~2ms, more than the entire rest of the hot path. Checks like that belong in `sync.sh`. Work is detached with `&!` so the prompt never waits and output can't scribble over it; the log is `$TMPDIR/dotfiles-sync.log`.
+
 **Key commands**:
 ```bash
 stow <package>              # Deploy a package (creates symlinks)

@@ -13,6 +13,10 @@ Cross-platform dotfiles: full Hyprland desktop on Arch Linux, shell + git config
 3. Run `./install.sh` — on Arch this installs the full desktop; on macOS it stows just the `zsh`, `git`, `osx`, and `claude` packages (Homebrew required)
 4. Open up new window to initiate `zsh` shell
 
+Re-running `./install.sh` is safe. Day to day you shouldn't need to: every interactive shell checks whether the repo has moved and re-syncs in the background when it has, so a `git pull` on one machine lands everywhere you open a terminal. Force it with `dotsync`, and see what happened in `$TMPDIR/dotfiles-sync.log`.
+
+If a machine already had config where a symlink belongs, sync moves it to `~/.dotfiles-backup/<timestamp>/` rather than clobbering it — worth a look after the first run on a new box.
+
 ## Colors
 
 if youd like to override the colors, check out the colors.base.zsh. Make a copy of it into colors.local.zsh and change anything you'd like
