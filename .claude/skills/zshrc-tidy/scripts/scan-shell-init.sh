@@ -12,7 +12,8 @@ set -uo pipefail
 # zero, so swallow the status rather than letting it look like a failure.
 count_active() {
     local n
-    n="$(grep -cv '^[[:space:]]*\(#.*\)\?$' "$1" 2>/dev/null)" || true
+    # ERE, not BRE: '\?' is a GNU extension that BSD grep (macOS) doesn't accept.
+    n="$(grep -Ecv '^[[:space:]]*(#.*)?$' "$1" 2>/dev/null)" || true
     echo "${n:-0}"
 }
 
@@ -33,8 +34,11 @@ fi
 # The symlink is what makes appends land in git. If it's gone, the live config has
 # drifted out of the repo and the two files need reconciling before anything else.
 if [[ -L "$HOME/.zshrc" ]]; then
-    target="$(readlink -f "$HOME/.zshrc")"
-    if [[ "$target" == "$(readlink -f "$ZSHRC")" ]]; then
+    target="$(readlink "$HOME/.zshrc")"
+    # -ef compares device+inode through the link, so it works regardless of whether
+    # the link is relative or absolute — and avoids 'readlink -f', which is a GNU
+    # flag missing from BSD readlink on older macOS.
+    if [[ "$HOME/.zshrc" -ef "$ZSHRC" ]]; then
         echo "symlink:  ~/.zshrc -> $ZSHRC  [ok]"
     else
         echo "symlink:  ~/.zshrc -> $target  [WRONG TARGET, expected $ZSHRC]"
