@@ -21,6 +21,8 @@ if youd like to override the colors, check out the colors.base.zsh. Make a copy 
 
 The `claude` package syncs Claude Code's config — `CLAUDE.md`, `settings.json`, `agents/`, and hand-written `skills/` — into `~/.claude`. It deliberately leaves out everything else that lives there (session transcripts, credentials, plugin caches), which is the bulk of the directory.
 
+MCP servers can't be symlinked into place, because Claude Code only reads them from `~/.claude.json`, which isn't synced. Each one gets a definition file in `claude/.claude/mcp/` instead, and `./install.sh` registers them — so adding a server is a matter of dropping a `<name>.json` in that directory and re-running the installer.
+
 Machine-specific settings go in `~/.claude/settings.local.json`; it stays untracked, same idea as `colors.local.zsh`.
 
 # GTK Theme
