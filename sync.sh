@@ -48,27 +48,40 @@ ensure_stow() {
     command -v stow >/dev/null
 }
 
+# Print the path to a command, or fail if it isn't installed.
+#
+# $PATH alone is not enough for anything cargo-installed. Callers don't reliably
+# have ~/.cargo/bin on $PATH — a long-lived shell that predates the entry, and
+# more sharply, this very script after it has just run `cargo install`, since a
+# process can't see a $PATH it didn't start with. Treating those as "missing"
+# means redundant network fetches at best and skipped work at worst.
+resolve_cmd() {
+    local p
+    p=$(command -v "$1" 2>/dev/null) && { printf '%s\n' "$p"; return 0; }
+    p="${CARGO_HOME:-$HOME/.cargo}/bin/$1"
+    [[ -x $p ]] && { printf '%s\n' "$p"; return 0; }
+    return 1
+}
+
+have_cmd() { resolve_cmd "$1" >/dev/null; }
+
 # marshal-shim backs both the MCP server and the statusline, and ships only via
 # cargo. Install when absent, but never auto-upgrade: `cargo install --force`
 # would rebuild on every sync for a version bump nobody asked for. Failure is not
 # fatal — the rest of the config is still worth deploying without it.
 ensure_marshal_shim() {
-    command -v marshal-shim >/dev/null && return 0
-    # Also check cargo's bin directly: callers don't always have it on PATH (a
-    # long-lived shell started before ~/.cargo/bin was added, say), and without
-    # this every such run would shell out to `cargo install` just to be told the
-    # package is already there — after a network index fetch.
-    [[ -x "${CARGO_HOME:-$HOME/.cargo}/bin/marshal-shim" ]] && return 0
+    have_cmd marshal-shim && return 0
     if (( ! PROVISION )); then
         warn "marshal-shim missing — MCP server and statusline degraded; run 'dotsync'"
         return 0
     fi
-    if ! command -v cargo >/dev/null; then
+    local cargo
+    if ! cargo=$(resolve_cmd cargo); then
         warn "cargo not available — skipping marshal-shim"
         return 0
     fi
     log "installing marshal-shim (cargo build, takes a minute)"
-    cargo install marshal-shim || warn "marshal-shim install failed"
+    "$cargo" install marshal-shim || warn "marshal-shim install failed"
     return 0
 }
 
@@ -169,8 +182,11 @@ register_mcp_servers() {
         name=$(basename "$f" .json)
         # Skip definitions whose binary isn't on this machine (e.g. marshal-shim
         # on the mac) — registering them would just error on every session start.
+        # have_cmd, not `command -v`: marshal-shim lives in ~/.cargo/bin, so a
+        # bare $PATH check declares it missing on the box that has it, and skips
+        # the one it was just installed on a few lines above.
         cmd=$(sed -n 's/.*"command"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$f" | head -1)
-        if [[ -n $cmd ]] && ! command -v "$cmd" >/dev/null; then
+        if [[ -n $cmd ]] && ! have_cmd "$cmd"; then
             log "  skipped MCP server $name: $cmd not installed"
             continue
         fi
