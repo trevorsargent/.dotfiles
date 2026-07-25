@@ -12,12 +12,17 @@ source $ZSH/autoload/homebrew.zsh
 # _tags fires. The guard rebuilds ~/.zcompdump at most once a day; the rest of
 # the time it trusts the existing dump (compinit -C), which also keeps the many
 # concurrently-starting shells from racing to rewrite the shared dump file.
+# Note the array: glob qualifiers only expand during filename generation, so the
+# tempting `[[ -n ...(#qN.mh+24) ]]` never globs — it tests a literal string, is
+# always true, and silently costs every shell a full rebuild.
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+_zcompdump_stale=( ${ZDOTDIR:-$HOME}/.zcompdump(N.mh+24) )
+if (( ${#_zcompdump_stale} )); then
     compinit
 else
     compinit -C
 fi
+unset _zcompdump_stale
 
 for file in $ZSH/autoload/*; do
     source "$file"
