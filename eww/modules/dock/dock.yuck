@@ -8,7 +8,7 @@
 (include "modules/usage/usage.yuck")
 (include "modules/net/net.yuck")
 (include "modules/workspaces/workspaces.yuck")
-(include "modules/ping/ping.yuck")
+(include "modules/nodes/nodes.yuck")
 (include "modules/sensors/sensors.yuck")
 (include "modules/gpu/gpu.yuck")
 
@@ -19,33 +19,28 @@
 
     (box :orientation "v" :hexpand true :space-evenly false
       (box :orientation "h" :space-evenly false :spacing 10 :style "margin-bottom: 10px;"
-        (workspace_container :display_name "DP-4" :start 0 :end 5)
+        (workspace_container :display_name "DP-4" :start 0 :end 9)
         (box :hexpand true)
-        (workspace_container :display_name "DP-5" :start 5 :end 10)
+        (workspace_container :display_name "DP-5" :start 9 :end 18)
       )
 
       (box :vexpand true )
 
-      (box :orientation "h" :hexpand true  :spacing 15  :space-evenly false
+      ; 4-column grid: every cell is exactly the same width
+      (box :orientation "v" :hexpand true :space-evenly false :spacing 15
 
-        (box :orientation "v" :hexpand true :space-evenly false :spacing 15
-          (box :orientation "h" :hexpand true :spacing 15 :space-evenly true
-            (cpu_combined)
-            (gpu_combined)
-          )
-          (ping_dock)
+        (box :orientation "h" :hexpand true :spacing 15 :space-evenly true
+          (cpu_combined)
+          (gpu_combined)
+          (disk :mountpoint "/")
+          (ram)
         )
-        (box :orientation "v" :space-evenly false :hexpand false :spacing 15
 
-          (box :orientation "h" :spacing 15
-            (disk :mountpoint "/")
-            (ram)
-          )
-
-          (box :orientation "h" :spacing 15
-            (net :iface "enp12s0" :name "Ethernet")
-            (net :iface "wt0" :name "Netbird")
-          )
+        (box :orientation "h" :hexpand true :spacing 15 :space-evenly true
+          (node :name "RSHIP 1" :stats node1 :ping node1_ping)
+          (node :name "RSHIP 2" :stats node2 :ping node2_ping)
+          (node :name "RSHIP 3" :stats node3 :ping node3_ping)
+          (net :iface "wt0" :name "Netbird")
         )
       )
 

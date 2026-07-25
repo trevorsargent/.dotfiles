@@ -22,7 +22,7 @@
       ; :class {active_workspace?.[display_name] == wsg.name ? "active workspace" : "workspace"}
       :space-evenly false
       :class "workspace"
-      :width 50
+      :width 25
       ; (for ws in {wsg.workspaces}
         ; (workspace :ws ws)
       ; )
