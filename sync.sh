@@ -147,10 +147,17 @@ stow_pkg() {
 # it needs neither jq nor python on a bare box.
 register_mcp_servers() {
     command -v claude >/dev/null || return 0
-    local f name
+    local f name cmd
     for f in "$HOME"/.claude/mcp/*.json; do
         [[ -e $f ]] || continue
         name=$(basename "$f" .json)
+        # Skip definitions whose binary isn't on this machine (e.g. marshal-shim
+        # on the mac) — registering them would just error on every session start.
+        cmd=$(sed -n 's/.*"command"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$f" | head -1)
+        if [[ -n $cmd ]] && ! command -v "$cmd" >/dev/null; then
+            log "  skipped MCP server $name: $cmd not installed"
+            continue
+        fi
         claude mcp get "$name" >/dev/null 2>&1 && continue
         if claude mcp add-json -s user "$name" "$(cat "$f")" >/dev/null 2>&1; then
             log "  registered MCP server: $name"
