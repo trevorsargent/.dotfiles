@@ -42,9 +42,17 @@ need different responses:
   real content in via steps 2–4, then restore the link (`stow -D zsh && stow zsh` from the
   repo root) so future appends land back in git.
 - **Content in `~/.zshenv` / `~/.zprofile` / `~/.profile` / `~/.bashrc`** — these are *not*
-  in the repo. Installers like rustup and conda write here too. Report what you find, and
-  ask before moving it: `.profile` and `.bashrc` may be intentionally serving non-zsh
-  shells, so relocating them into `autoload/` can silently drop config for `bash -l`.
+  in the repo, and zsh is the only shell in use here, so nothing routinely reads
+  `.profile`/`.bashrc`/`.bash_profile` at all. Treat what you find there as a **gap, not as
+  bash config to preserve**: installers like rustup write to those files by default, which
+  means the setting never reached zsh and the tool is quietly missing from `$PATH` in every
+  session. Don't skip these because they "belong to bash."
+
+  The tell is a tool that's installed but unresolvable: `ls ~/.cargo/bin/foo` succeeds while
+  `zsh -i -c 'command -v foo'` fails. Before adding a module, check whether one already
+  covers it (`path.zsh` handles `$HOME/.local/bin`, which is what uv's `~/.local/bin/env`
+  does) — otherwise you'll add a redundant module. Leave the bash files themselves in place;
+  copying the setting into an autoload module is the fix, deleting their lines isn't.
 
 If the scan comes back clean, say so plainly and stop. Don't invent work.
 

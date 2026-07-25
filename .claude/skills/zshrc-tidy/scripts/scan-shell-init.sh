@@ -76,7 +76,9 @@ git -C "$DOTFILES" log -1 --format='    %h %ad %s' --date=short -- zsh/.zshrc
 echo
 echo "=== B. other shell startup files (not tracked in this repo) ================="
 echo "    Installers (rustup, conda, sdkman) often write here instead of .zshrc."
-echo "    .profile/.bashrc may be serving bash intentionally — confirm before moving."
+echo "    zsh is the only shell in use, so anything below is a GAP, not bash config:"
+echo "    the setting never reached zsh. Check it against section C before adding a"
+echo "    module — an existing one may already cover it."
 echo
 
 for f in .zshenv .zprofile .zlogin .zlogout .profile .bashrc .bash_profile; do
