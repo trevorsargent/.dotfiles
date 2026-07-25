@@ -22,9 +22,57 @@ QUIET=0
 log()  { (( QUIET )) || printf '%s\n' "$*"; }
 warn() { printf '%s\n' "$*" >&2; }
 
-# Checked here rather than in the shell hook: a $commands lookup in zsh walks
-# $PATH and costs more than the entire hot path it would be guarding.
-command -v stow >/dev/null || { warn "stow is not installed"; exit 1; }
+# Installing tools means sudo prompts and multi-minute compiles, neither of which
+# may happen in a shell hook — a prompt there would hang a background job nobody
+# can see. So --quiet (the hook) only ever reports what's missing, while a manual
+# `dotsync` or install.sh run, which has a terminal attached, can actually fix it.
+PROVISION=$(( ! QUIET ))
+
+# Bootstrap the one dependency this script cannot work without.
+ensure_stow() {
+    command -v stow >/dev/null && return 0
+    if (( ! PROVISION )); then
+        warn "stow is not installed — run 'dotsync' to install it"
+        return 1
+    fi
+    log "installing stow"
+    if [[ $(uname -s) == "Darwin" ]]; then
+        command -v brew >/dev/null || { warn "Homebrew is required first: https://brew.sh"; return 1; }
+        brew install stow
+    elif command -v pacman >/dev/null; then
+        sudo pacman -S --needed --noconfirm stow
+    else
+        warn "no known package manager — install stow manually"
+        return 1
+    fi
+    command -v stow >/dev/null
+}
+
+# marshal-shim backs both the MCP server and the statusline, and ships only via
+# cargo. Install when absent, but never auto-upgrade: `cargo install --force`
+# would rebuild on every sync for a version bump nobody asked for. Failure is not
+# fatal — the rest of the config is still worth deploying without it.
+ensure_marshal_shim() {
+    command -v marshal-shim >/dev/null && return 0
+    # Also check cargo's bin directly: callers don't always have it on PATH (a
+    # long-lived shell started before ~/.cargo/bin was added, say), and without
+    # this every such run would shell out to `cargo install` just to be told the
+    # package is already there — after a network index fetch.
+    [[ -x "${CARGO_HOME:-$HOME/.cargo}/bin/marshal-shim" ]] && return 0
+    if (( ! PROVISION )); then
+        warn "marshal-shim missing — MCP server and statusline degraded; run 'dotsync'"
+        return 0
+    fi
+    if ! command -v cargo >/dev/null; then
+        warn "cargo not available — skipping marshal-shim"
+        return 0
+    fi
+    log "installing marshal-shim (cargo build, takes a minute)"
+    cargo install marshal-shim || warn "marshal-shim install failed"
+    return 0
+}
+
+ensure_stow || exit 1
 
 # mkdir is atomic, so it doubles as a mutex — several terminals starting at once
 # must not race each other through stow.
@@ -125,6 +173,7 @@ if [[ $(uname -s) != "Darwin" ]]; then
     done
 fi
 
+ensure_marshal_shim
 register_mcp_servers
 
 # Stamp unconditionally, including on failure: the shell hook keys off this file,

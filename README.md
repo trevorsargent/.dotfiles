@@ -17,6 +17,8 @@ Re-running `./install.sh` is safe. Day to day you shouldn't need to: every inter
 
 If a machine already had config where a symlink belongs, sync moves it to `~/.dotfiles-backup/<timestamp>/` rather than clobbering it — worth a look after the first run on a new box.
 
+`dotsync` also installs what's missing: `stow` via the system package manager, and `marshal-shim` (statusline + MCP server) via `cargo`. The automatic background sync deliberately doesn't — it only notes them in the log — since installing means sudo prompts and long compiles that have no business running behind a shell start. Neither is auto-upgraded; `cargo install marshal-shim` when you want a newer one.
+
 ## Colors
 
 if youd like to override the colors, check out the colors.base.zsh. Make a copy of it into colors.local.zsh and change anything you'd like
