@@ -50,13 +50,5 @@
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "mcpServers": {
-    "marshal": {
-      "command": "marshal-shim",
-      "env": {
-        "MARSHAL_DAEMON_ADDRESS": "${MARSHAL_DAEMON_ADDRESS:-ws://marshal-01.lucid.host:6155}"
-      }
-    }
-  },
   "model": "opus[1m]"
 }
