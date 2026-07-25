@@ -1,0 +1,30 @@
+
+(deflisten node1 :initial '{"up":false,"cpu":0,"mem":0,"mem_used_mib":0,"mem_total_mib":0}' "modules/nodes/nodes.sh rship-node-01.lucid.host")
+(deflisten node2 :initial '{"up":false,"cpu":0,"mem":0,"mem_used_mib":0,"mem_total_mib":0}' "modules/nodes/nodes.sh rship-node-02.lucid.host")
+(deflisten node3 :initial '{"up":false,"cpu":0,"mem":0,"mem_used_mib":0,"mem_total_mib":0}' "modules/nodes/nodes.sh rship-node-03.lucid.host")
+
+(deflisten node1_ping :initial "---" "modules/ping/ping.sh rship-node-01.lucid.host")
+(deflisten node2_ping :initial "---" "modules/ping/ping.sh rship-node-02.lucid.host")
+(deflisten node3_ping :initial "---" "modules/ping/ping.sh rship-node-03.lucid.host")
+
+; fixed-width value column keeps CPU/MEM readings aligned down the card
+(defwidget node_stat [name detail value]
+  (box :orientation "h" :space-evenly false :hexpand true
+    (label :text name :class "caption" :halign "start")
+    (box :hexpand true)
+    (label :text detail :class "caption" :halign "end")
+    (box :width 60 (label :text value :halign "end"))))
+
+(defwidget node [name stats ping]
+  (box :class "group node ${stats.up ? "" : "node-down"}"
+       :orientation "v" :space-evenly true :hexpand true :height BOX
+    (box :orientation "h" :space-evenly false
+      (label :text name :halign "start")
+      (box :hexpand true)
+      (label :text {ping == "---" ? "---" : "${round(ping, 0)}ms"} :class "caption" :halign "end"))
+    (node_stat :name "CPU"
+               :detail ""
+               :value {stats.up ? "${stats.cpu}%" : "--"})
+    (node_stat :name "MEM"
+               :detail {stats.up ? "${round(stats.mem_used_mib / 1024, 0)}/${round(stats.mem_total_mib / 1024, 0)}G" : ""}
+               :value {stats.up ? "${stats.mem}%" : "--"})))
