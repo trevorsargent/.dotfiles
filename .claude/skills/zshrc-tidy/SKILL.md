@@ -55,9 +55,10 @@ with comments (`# bun`, `# pnpm end`, `>>> conda initialize >>>`). For each bloc
 its destination:
 
 - **A module already exists** (`bun.zsh`, `pnpm.zsh`, `pyenv.zsh`, …) → merge into it.
-  Check first whether the module already covers the same thing. Several modules in this
-  repo are *deliberately commented out* (`pnpm.zsh`, `homebrew.zsh`) — that's a decision,
-  not an oversight. If the installer re-added what a module has commented out, ask the user
+  Check first whether the module already covers the same thing. Some modules are
+  *deliberately commented out* — at time of writing `pnpm.zsh`, `deno.zsh`, and `nvm.zsh`,
+  but run the scan rather than trusting that list. A commented-out module is a decision,
+  not an oversight, so if the installer re-added what one has disabled, ask the user
   whether they want it live now rather than silently uncommenting it.
 - **No module exists** → create `autoload/<tool>.zsh`, named after the command the user
   actually types (`fnm.zsh`, not `node-version-manager.zsh`).
@@ -79,8 +80,11 @@ the autoload loop — with a daily-rebuild guard so concurrent shells don't race
 `~/.zcompdump`. Installer snippets that call `autoload -Uz compinit; compinit` themselves
 undo that. Delete those lines and keep only the actual completion sourcing.
 
-**Use `$HOME`, not the literal path.** Installers hardcode `/home/trevor/...`. The repo
-uses `$HOME` so configs stay portable (there's an `osx` package here too).
+**Use `$HOME`, not the literal path.** Installers hardcode `/home/trevor/...`. The `zsh`
+package is stowed on macOS too, so a literal Linux path silently breaks there — never
+hardcode `/home/trevor` or `/Users/trevor`. Same reasoning applies to platform-specific
+directories: guard on existence (`[[ -d /snap/bin ]]`, the brew-prefix loop in
+`homebrew.zsh`) rather than assuming the OS.
 
 **Guard anything that can fail.** The autoload loop sources every file in every shell,
 including ones on machines where the tool isn't installed. Follow the existing patterns:
@@ -95,16 +99,20 @@ command -v pyenv >/dev/null && ...     # pyenv.zsh
 Completion and prompt setup should be interactive-guarded specifically because scripts run
 with `zsh -c` pay the cost otherwise, and some completion shims misbehave without a tty.
 
-**Don't duplicate PATH entries.** `path.zsh` already appends `$HOME/.local/bin`. If a block
-adds a path that's already there, drop it. If it adds a genuinely new one, use the
-idempotent form so re-sourcing `~/.zshrc` doesn't grow `$PATH` unboundedly:
+**Don't duplicate PATH entries.** `path.zsh` already appends `$HOME/.local/bin`; if a block
+re-adds it, drop the line. Note that `init.zsh` declares `typeset -gU path fpath`, so zsh
+dedupes both arrays itself — you don't need the `case ":$PATH:"` guard installers ship, and
+removing it is usually the right call. Keep it only where the block also does expensive
+work worth skipping, not merely to avoid a duplicate entry.
 
-```zsh
-case ":$PATH:" in
-  *":$TOOL_HOME:"*) ;;
-  *) export PATH="$TOOL_HOME:$PATH" ;;
-esac
-```
+**Put `fpath` additions before `compinit`, not in an autoload module.** `init.zsh` runs
+`compinit` *after* `homebrew.zsh` but *before* the autoload loop. A module that appends a
+completion directory to `fpath` therefore does so too late — compinit has already scanned,
+and the completions silently never load. This is the one case where a block can't just
+become `autoload/<tool>.zsh`: it belongs in `homebrew.zsh` (which exists partly to do
+exactly this for brew's `site-functions`) or needs its own explicit source line added to
+`init.zsh` ahead of `compinit`. Sourcing a ready-made completion *script* (bun's `_bun`,
+`source <(cli completions zsh)`) is fine in a module — that path doesn't involve `fpath`.
 
 **Mind the ordering.** The loop sources `autoload/*` in glob (alphabetical) order, so
 `bun.zsh` runs before `zoxide.zsh`. If a block must run before others — a version manager

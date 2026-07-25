@@ -10,7 +10,10 @@ Two things bite repeatedly across almost all of these, so check them every time:
 1. **`compinit` duplication.** `init.zsh` already runs `compinit` before the autoload loop,
    with a daily-rebuild guard. Any `autoload -Uz compinit` / `compinit` the installer added
    must go, or it re-runs (and can race the shared `~/.zcompdump`).
-2. **Hardcoded `/home/trevor`.** Rewrite to `$HOME`.
+2. **Hardcoded `/home/trevor`.** Rewrite to `$HOME` — the `zsh` package is stowed on macOS
+   too, where that path doesn't exist.
+3. **Redundant PATH-dedup guards.** `init.zsh` sets `typeset -gU path fpath`, so zsh
+   dedupes for you; the installer's `case ":$PATH:"` wrapper can usually go.
 
 ---
 
@@ -21,10 +24,15 @@ Marker: `# bun completions`, `BUN_INSTALL`
 Target: `bun.zsh` (exists)
 
 ```zsh
-[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+# bun completions
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 ```
+
+Note the ordering: `BUN_INSTALL` is defined before it's used in the completion guard, which
+is the reverse of what the installer appends. Reuse the variable instead of repeating the
+path — the installer hardcodes `/home/trevor/.bun/_bun`, which breaks on macOS.
 
 ### pnpm
 Marker: `# pnpm` … `# pnpm end`
@@ -140,9 +148,15 @@ cause, and caching to a file under `$XDG_CACHE_HOME` is the fix worth proposing.
 
 ### homebrew
 Marker: `eval "$(brew shellenv)"`
-Target: `homebrew.zsh` (exists, **currently commented out in full**)
-Special: `init.zsh` sources this explicitly *before* the autoload loop, because it sets up
-`PATH` that later modules depend on. It's the right home for anything that must run first.
+Target: `homebrew.zsh` (exists and is live)
+Already handles all three prefixes (Apple Silicon, Intel mac, Linuxbrew) by looping over
+them and taking the first that's executable, so a fresh installer block adding a
+fourth `eval "$(brew shellenv)"` is redundant — drop it.
+
+Special: `init.zsh` sources this file explicitly *before* `compinit` and the autoload loop,
+because it sets up `PATH` later modules depend on **and** puts brew's `site-functions` on
+`fpath` while that still has an effect. That makes it the correct home for any block that
+must run before completion init — see the `fpath` rule in SKILL.md.
 
 ---
 
