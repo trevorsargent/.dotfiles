@@ -57,8 +57,13 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
 fi
 
 # Arch Linux
-# install dependencies
-sudo pacman -Syu --noconfirm hyprland eww mako stow git alacritty zoxide fzf
+# install dependencies. curl is here for ensure_rustup below — a minimal Arch
+# install doesn't necessarily have it, and without it the rustup bootstrap would
+# fall straight through to its download-failed warning.
+sudo pacman -Syu --noconfirm hyprland eww mako stow git alacritty zoxide fzf curl
+
+# Before sync.sh, so ensure_marshal_shim finds a toolchain on a fresh box.
+ensure_rustup
 
 # Not fatal under `set -e`: sync.sh exits non-zero if any single package fails to
 # stow, and the shell setup below is unrelated to that. Letting one bad package
