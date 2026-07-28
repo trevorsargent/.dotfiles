@@ -47,8 +47,9 @@ Each top-level directory is an independent Stow package containing configuration
   - Split configs: `monitor.conf`, `binds.conf`, `autostart.conf`, `general.conf`, `decoration.conf`, `animations.conf`, `windowrules.conf`, `input.conf`, `cursor.conf`, `environments.conf`
   - `scripts/` - Helper scripts for app launching, window switching
 - **Background**: solid black everywhere — desktop via `misc:background_color` in `conf/misc.conf` (no wallpaper daemon), lock screen via `background { color }` in `hyprlock.conf`
-- **Plugins**: Uses `hyprsplit` (install via hyprpm)
-- **Bindings**: Includes custom PS4 controller bindings in `binds.conf`
+- **Plugins**: Uses `hyprsplit` — since the Lua migration it's a Lua library (`git clone https://github.com/shezdy/hyprsplit ~/.config/hypr/hyprsplit`, machine-local), not a hyprpm plugin
+- **Bindings**: Includes custom PS4 controller bindings in `conf/binds.lua`
+- **Lua config (active)**: `hyprland.lua` + `conf/*.lua` is the live config — Hyprland prefers it over `hyprland.conf` at startup. Config edits go in the `.lua` files. The old `hyprland.conf` + `conf/*.conf` are kept only as rollback fallback (see `hypr/LUA-MIGRATION.md`) and can be deleted once the Lua config has proven itself.
 
 #### Eww (Widget System)
 - **Location**: `eww/`
