@@ -19,7 +19,7 @@
     (box   :orientation "h"
       (label :text {round(EWW_DISK[mountpoint].used / 1024 / 1024 / 1024, 0) + "G"} :class "caption" :halign "start")
       (box :hexpand true)
-      (label :text {round(EWW_DISK[mountpoint].total / 1024 / 1024 / 1024, 0) + "G"} :class "caption")
+      (label :text {round(EWW_DISK[mountpoint].free / 1024 / 1024 / 1024, 0) + "G"} :class "caption")
     )
     
   )
@@ -30,4 +30,3 @@
     (disk :mountpoint "/")
   )
 )
-

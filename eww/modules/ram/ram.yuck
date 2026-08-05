@@ -19,7 +19,7 @@
     (box   :orientation "h"  :space-evenly false  :hexpand true
       (label :text {round(EWW_RAM.used_mem / 1024 / 1024 / 1024, 0) + "G"}  :class "caption" )
       (box :hexpand true)
-      (label :text {round(EWW_RAM.total_mem / 1024 / 1024 / 1024, 0) + "G"} :class "caption" )
+      (label :text {round(EWW_RAM.free_mem / 1024 / 1024 / 1024, 0) + "G"} :class "caption" )
     )
     
   )
